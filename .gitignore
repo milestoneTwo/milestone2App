@@ -1,7 +1,7 @@
 /m2venv
 .idea/
 /testCode
-data/raw/*
+data/
 __pycache__
 .DS_Store
 pickles/*
