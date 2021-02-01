@@ -1,0 +1,8 @@
+# download files
+cd milestone2App/data
+kaggle competitions download -c umich-siads-695-predicting-text-difficulty
+
+# unzip directory
+
+
+#
