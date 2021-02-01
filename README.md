@@ -44,7 +44,14 @@ milestone2Project
 
 `python app.py --run build_app`
 
-7. To be Continued
+7. To run the development web server run the following commands
+
+`cd Milestone2Docs`
+
+`mkdocs serve`
+
+
+
 
 
 
