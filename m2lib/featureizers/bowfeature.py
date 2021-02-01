@@ -10,13 +10,13 @@ class BOWFeature(Picklable):
         # make ngrams and add to corpus tokens
         if ngrams:
             pass
-        self.data = self.make_bow_dictionary(corpus)
+        self.data_dictionary = Dictionary(corpus)
         super(BOWFeature, self).__init__(**self.pickle_kwargs)
 
     def make_bow_dictionary(self, corpus, **kwargs):
-        dictionary = Dictionary(corpus)
-        dictionary.filter_extremes(no_below=20, no_above=0.5)
-        data = [dictionary.doc2bow(doc) for doc in corpus]
+        self.data_dictionary.filter_extremes(no_below=20, no_above=0.5)
+        data = [self.data_dictionary.doc2bow(doc) for doc in corpus]
+        self.save()
         return data
 
     def save(self):
