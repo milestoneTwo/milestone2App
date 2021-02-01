@@ -1,6 +1,9 @@
 import pandas as pd
 import os
-from configurations import RAW_DATA_DIR
+from configurations import RAW_DATA_DIR, DATA_DIR
+from m2lib.pickler.picklable import Picklable, PickleDef
+
+
 
 class ReadError(Exception):
     """
@@ -22,18 +25,34 @@ class ReadError(Exception):
         '''
 
 
-class Read():
+class Read(Picklable):
     """
-    parameters: file or directory
+    parameters: file or directory or list of files
     """
-    def __init__(self, file=None, files=None):
-        self.file = file
-        self.files = files
+    def __init__(self, file=None):
         # defines allowed extensions
         self.allowed_extensions = ['txt', 'csv']
-        self.raw_data_dir = RAW_DATA_DIR
+        self.data_dir = DATA_DIR
         self.read_dfs = {}
-        self.__readMultipleFilesDataFrames(self.files)
+        pd = PickleDef(self)
+        self.pickle_kwargs = pd()
+        super(Read, self).__init__(**self.pickle_kwargs)
+        # logic to read in new files
+        if file:
+            if type(file) == list:
+                for f in file:
+                    if f in self.read_dfs:
+                        print(f'{f} already has been read \n skipping {f}')
+                        pass
+                    else:
+                        self.__readFilesDataFrames(file)
+            else:
+                if file in self.read_dfs:
+                    print(f'{file} already has been read \n using loaded object')
+                else:
+                    self.__readFilesDataFrames(file)
+
+
 
     def __getExtension(self, file):
         return file.split('.')[-1]
@@ -41,23 +60,24 @@ class Read():
     def __readToDataFrame(self, file):
         ext = self.__getExtension(file)
         if ext in self.allowed_extensions:
-            df = pd.read_csv(os.path.join(self.raw_data_dir,file))
+            try:
+                df = pd.read_csv(os.path.join(self.data_dir,file))
+                self.read_dfs[file] = df
+                return df
+            except Exception as e:
+                print(e)
         else:
             raise ReadError(file, message='extension not in allowed extensions')
-        return df
 
-    def __readMultipleFilesDataFrames(self, files):
-        print('reading several defined files to a dataframe')
-        def update_files(files):
-            for file in files:
-                try:
-                    df = self.__readToDataFrame(file)
-                    self.read_dfs[file] = df
-                except Exception as e:
-                    print(e)
-
-        update_files(files)
-
+    def __readFilesDataFrames(self, file):
+        if type(file) == list:
+            for f in file:
+                self.__readToDataFrame(f)
+        else:
+            if (type(file) == str):
+                self.__readToDataFrame(file)
+        # saves self to pickle file after reading frame or frames
+        self.save()
 
     def add_file(self, file):
         """
@@ -71,13 +91,20 @@ class Read():
         else:
             f = [file]
         assert f, 'f not defined'
-        self.__readMultipleFilesDataFrames(f)
+        self.__readFilesDataFrames(f)
+        self.save()
 
-    def __pickle(self):
+    def add_dataframe(self, file):
+        return self.__readToDataFrame(file)
+
+    def save(self, obj=None):
+        super(Read, self).save()
         pass
 
-    def __repr__(self):
-        pass
+    def load(self):
+        super(Read, self).load()
 
-    def __call__(self):
-        pass
+
+if __name__ == '__main__':
+    reader = Read()
+    print(reader.read_dfs)
