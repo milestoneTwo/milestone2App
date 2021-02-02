@@ -1,17 +1,22 @@
 # Milestone 2 Project
 
-Brought to you by Dave Franks and Ermias Bizuwork
+Brought to you by Dave Franks and Ermias Bizuwork [About](about.md)
 
-## Commands
+MADS Program 2021 Go Blue!!
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+## About the Project
 
-## Project layout
+The project was broken up into two parts based on the type of learning being employed. The first part [Part A](part1.md) is the supervised learning portion where the goal was to build a binary classifier to beat some derived estimators at predicting the level of reading difficulty of text. The second part [Part B](part2.md) is the unsupervised learning portion of the project. Where using the same data the goal was to use unsupervised learning techniques to glean some information from the dataset. 
 
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+In summary there were two main purposes to the project.
+
+- [Part A](part1.md): To build a model that out performs in accuracy metric the Logistic Regression Classifier and Naive Bayes Classifier scoring 68% and 65% accuracy respectively.
+- [Part B](part2.md): Create an unsupervised learning model that can characterize and explain the dataset in some way.
+
+The third and final stretch goal was to combine the two parts to have a semi-supervised algorithm to better increase the accuracy of the binary classifier made in Part A. The idea behind was to build a feature using an unsupervised topic model like [LDA](https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation) to create a feature that would be aggregated with other features in Part A. Due to some technical limitations it may not be feasible to accomplish this portion of the task but a description of what could be done is described in the [Stretch Goals](stretchgoals.md)
+
+## Using the Project
+
+A good starting point which you have already achieved if you are seeing this message is going to the [github repo](https://github.com/milestoneTwo/milestone2App) and following the instructions in the README.md. This will help you get the project setup if you haven't already and get your development environment ready to go. 
+
+    

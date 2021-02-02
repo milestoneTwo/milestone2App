@@ -1,6 +1,5 @@
 from gsdmm import MovieGroupProcess
-from m2lib.pickler.picklable import Picklable
-from m2lib.pickler.pickleDef import PickleDef
+from m2lib.pickler.picklable import Picklable, PickleDef
 from m2lib.readers.readdata import Read
 from m2lib.featureizers.preprocessor import Preprocessor
 
