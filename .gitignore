@@ -1,0 +1,9 @@
+/m2venv
+.idea/
+/testCode
+data/
+__pycache__
+.DS_Store
+pickles/*
+/testingNotebook.ipynb
+/docker_build_steps.txt
