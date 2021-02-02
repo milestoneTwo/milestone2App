@@ -65,6 +65,32 @@
                 </ul>
                 <ul class="current">
                     <li class="toctree-l1 current"><a class="reference internal current" href="./">Part2</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#motivation">Motivation</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#data-source">Data Source</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#unsupervised-learning-methods">Unsupervised Learning Methods</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#source-code-workflow">Source Code Workflow</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#pickling">Pickling</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#basic-pipeline-steps">Basic Pipeline Steps</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#overview">Overview</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#parameter-tuning">Parameter Tuning</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#unsupervised-evaluation-and-parameter-tuning">Unsupervised Evaluation and Parameter Tuning</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#discussion">Discussion</a>
+    </li>
+    </ul>
                     </li>
                 </ul>
       </div>
@@ -99,7 +125,104 @@
           <div role="main">
             <div class="section">
               
-                
+                <h1 id="partb-unsupervised-learning">PartB Unsupervised Learning</h1>
+<h2 id="motivation">Motivation</h2>
+<p>In this part of the project our goal was to use Latent Dirichlet Allocation to "cluster" or create topcis which aggregate the documents in the dataset together for analysis.</p>
+<p>Motivation for the work in this section was to understand how to be use a topic model to extract a useful feature to then be able to fuel the classifier in Part A of this project. In doing so more information can be gleaned from understanding word pairings and probabilities distributions of documents to derived topics. More analysis is needed to use the topic as a feature for the binary classifier in Part A. This is discussed in the <a href="../stretchgoals/">Stretch Goals</a> on how this could have been accomplished. </p>
+<h2 id="data-source">Data Source</h2>
+<p>The sources for this data were provided by the instruction team for SIADS694 and SIADS695. Details on the dataset can be found in the <a href="https://www.kaggle.com/c/umich-siads-695-predicting-text-difficulty/overview">kaggle competition</a>. The dataset was downloaded using the kaggle dowloader python tool from the kaggle competition website. The dataset consisted of a few different files that were designed to be used as potential features for PartA. For PartB however we only needed to use the csv files with the sentences in them. Those files are named 'WikiLarge_Test.csv' and 'WikiLarge_Train.csv'. In the 'WikiLarge_Train.csv' there are two columns one called 'original_text' and one called 'label'. Original text is a string representing the document and label is its classification as an integer (0,1) as either 'does NOT need to be simplified' or 'does need to be simplified'. 
+* 'WikiLarge_Train.csv' has 416,768 documents in the corpus (labeled)
+* 'WikiLarge_Test.csv' has 119,092 documents in the corpus (unlabeled)</p>
+<h2 id="unsupervised-learning-methods">Unsupervised Learning Methods</h2>
+<p>Our main goal here was to process the training documents to extract feature representations for PartA. Given time constraints this goal was not achieved fully. However it did yield some interesting findings going through the effort. It was a great challenge engineering wise working with a large dataset and performing some of the analysis needed to extract topics using LDA. Model tuning and other processing steps came at somewhat of a premium as well given how long it takes to make some of the steps. </p>
+<h3 id="source-code-workflow">Source Code Workflow</h3>
+<p>The methodology was similar to most Natural Language Processing tasks. There is a fairly discrete high level pipeline with potential modifications at each step that are dependent on the task at hand. Starting with the high level architecture. Given the amount of time spent coding and recoding or pickling objects a set of utilities were built in the form of a python package or library. It is title m2lib and is in the main project directory. It houses the picklers, preprocessors, featureizers, and model creating code. </p>
+<h5 id="pickling">Pickling</h5>
+<p>An important note here is that at each step instead of re-performing each sub step in the process great effort was taken to ensure that repeating the process was not necessary. Custom classes were built such that when inherited from they could check for presence of a pickle corresponding to the child class before initializing the object. This meant the whole class (object) would get serialized and deserialized automatically on init. Which isn't always desireable given that those classes may change when you are developing. So some work is needed to refine the architecture. A shortcut was taken to create a separate picklable object that could store the important output of each step. In the cases encountered here it was typically 5 types. </p>
+<ul>
+<li>Preprocessed tokens example</li>
+</ul>
+<pre><code class="language-python"># tokens
+['the', 'car', 'was', 'fast']
+#ngamrms (bigrams)
+['the_car', 'car_was', 'was_fast']
+# full token token + bigram
+['the', 'car', 'was', 'fast', 'the_car', 'car_was', 'was_fast']
+</code></pre>
+<ul>
+<li>Featureized Tokens</li>
+</ul>
+<pre><code class="language-python"># bag of words (id, count)
+[(13, 1), (53, 3), (18, 4), (52, 3)]
+
+#TFID vectors
+[[[(0, 1), (1, 1), (2, 2), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1), (8, 2), (9, 1), (10, 1), (11, 1), (12, 1), (13, 1), (14, 1), (15, 1), (16, 1)]]
+['addition', 'anna', 'austen', 'continued', 'continued_work']
+# dictionary (gensim utils)
+</code></pre>
+<ul>
+<li>Models (objects)</li>
+<li>HTML (charts)</li>
+<li>Native Python objects</li>
+</ul>
+<h5 id="basic-pipeline-steps">Basic Pipeline Steps</h5>
+<ol>
+<li>Read data</li>
+<li>Preprocess (tokenize, lemmatize, stopwords, punctuation removal, etc)</li>
+<li>Create feature representations (Bag of words, vectors)</li>
+<li>Create Model</li>
+<li>Analyze Model</li>
+<li>Visualize</li>
+</ol>
+<h5 id="overview">Overview</h5>
+<p>Step 1 we are reading the data into memory using pandas read from csv functionality. Its not a particular costly process and can be done quickly. Still a class was created to handle reading and accessing dataframes and original data then serialized to pickle.</p>
+<p>Step 2 is preprocessing it was done mostly with <a href="https://radimrehurek.com/gensim/parsing/preprocessing.html">gensim preprocessing</a> classes that were very useful and comprehensible. SpaCy was a bit more difficult to fit into the design without going to far into their architecture. However given that is has some very advanced techniques for processing data it will be considered for future use. Their pre built pipelines are supposed to be fast and intelligent.</p>
+<p>Tokenizing code. As you can see two popular steps for tokenizing were left out which is stripping short tokens and stemming text. This decision was made for cleanliness of output from LDA model having legible words. </p>
+<pre><code class="language-python">def tokenize_gensim_string(self, doc):
+    CUSTOM_FILTERS = [
+        strip_tags,
+        strip_punctuation,
+        strip_multiple_whitespaces,
+        strip_numeric,
+        remove_stopwords,
+        # strip_short,
+        # stem_text
+    ]
+    doc_ = preprocess_string(doc, CUSTOM_FILTERS)
+    return doc_
+
+</code></pre>
+<p>Step 3 Creating feature representation was also done with gensim using the bag of words model and TFID model. Each of which produce their own object representations as output that can be used for LDA model creation. See gensim <a href="https://radimrehurek.com/gensim/models/tfidfmodel.html?highlight=tfid#module-gensim.models.tfidfmodel">tfidmodel</a> and <a href="https://radimrehurek.com/gensim/corpora/dictionary.html?highlight=doc2bow#gensim.corpora.dictionary.Dictionary.doc2bow">doc2bow</a></p>
+<p>Step 4 Creating models again was another task covered by gensim. <a href="https://radimrehurek.com/gensim/models/ldamodel.html">LDA Model</a> It's one of the more widely used for LDA and has tons of support. A model was created with bag of words and tfid to compare the differences in the two. A third model was created using Gibbs Sampling Dirichlet Multinomial Mixture which is supposed to be better at topic modeling for short texts. It is also known as the Movie Group Process. Described in this <a href="https://towardsdatascience.com/short-text-topic-modeling-70e50a57c883">medium post</a>. </p>
+<p>Step 5 Analyzing the models was done with using two metrics <a href="https://radimrehurek.com/gensim/models/atmodel.html?highlight=topic%20perplexity#gensim.models.atmodel.AuthorTopicModel.log_perplexity">perplexity</a> and <a href="https://radimrehurek.com/gensim/models/coherencemodel.html">coherence</a> measures using gensim's LDA model attributes and methods.</p>
+<p>Step 6 Visualizations were done primarily with <a href="https://nbviewer.jupyter.org/github/bmabey/pyLDAvis/blob/master/notebooks/pyLDAvis_overview.ipynb#topic=0&amp;lambda=1&amp;term=">PyLDAvis</a>. It can hook right into the model and provide insight into the 2D cluster structure of the topic model. </p>
+<h5 id="parameter-tuning">Parameter Tuning</h5>
+<p>The next section discusses a little in more detail on evaluation and how it impacted parameter tuning. There were few parameters to tune that had meaningful effects on the outcomes. The most impactful parameter is by far the number of <strong>K</strong> topics selected for each topic model (LDA, GSDMM). </p>
+<ul>
+<li>For bag of words feature there are some parameters to filter out extreme values from the dataset that are either lower or higher in instance count. </li>
+<li>LDA model has a few parameters that can be tuned most were left default.</li>
+</ul>
+<pre><code class="language-python">self.lda_args = {
+            'chunksize': 2000,
+            'alpha' : 'auto',
+            'eta': 'auto',
+            'iterations' : 50,
+            'num_topics' : 10, # K
+            'passes' : 20,
+            'eval_every' : None,
+            # 'workers' : 3,
+        }
+</code></pre>
+<ul>
+<li>To include or not include ngrams? That question was difficult to answer with higher order ngrams your doc term matrix ends up being very sparse. So I split the middle and went with only 2 ngram model. Once this was selected it remained stationary for the project as running the bag of words model was costly. </li>
+</ul>
+<h2 id="unsupervised-evaluation-and-parameter-tuning">Unsupervised Evaluation and Parameter Tuning</h2>
+<p>Evaluation was done at a few levels in the basic pipeline described above for picking some of the parameters and hyperparameters. However the largest amount of effort went into evaluating perplexity and coherence. Higher coherence is better and lower perplexity is better. Given time constraints only a few runs were made at trying to select an ideal <strong>K</strong> number of topics. </p>
+<p>The algorithm performed was to iterate through 4 topic sizes <code>[5,10,15,20]</code> to then calculate perplexity and coherence and optimize the topic selection based on the outcomes. </p>
+<h2 id="discussion">Discussion</h2>
+<p>There were several learnings from this project. One of the greatest is that large datasets are very difficult and time consuming to running analysis on. The gensim implementation of bag of words calculation took 10+ hours to complete on the final run. So pickling was a high priority in order to prevent from having to re run the pipeline steps for testing. </p>
+<p>The solution has several opportunities for expansion one mentioned in the section for <a href="../stretchgoals/">stretch goals</a>. Second the project overall could be integrated partA and partB in order to build a toolset that can run a full semisupervised pipeline with feature enhancements using topics. Lastly expand the pipeline, class structure, and architecture to allow for configurability of each step and automate parameter selection. </p>
+<p>This project had very little ethical concerns in my consideration given that the binary classifier is making a suggestion to modify sentences based on level of difficulty. That seems free of ethical concern. Every ML model has implications on human beings so depending on how this model is used it could have an ethical dilemma. For instance if a publishing house is using the model to analyze unpublished books </p>
               
             </div>
           </div>
