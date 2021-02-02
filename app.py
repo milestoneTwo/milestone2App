@@ -5,8 +5,12 @@ import os
 from m2lib.readers.readdata import Read
 from m2lib.featureizers.preprocessor import Preprocessor
 from m2lib.featureizers.bowfeature import BOWFeature
+from m2lib.featureizers.tfidfeature import TFIDFeature
+from m2lib.model.ldaModel import LDAModel, LDATFIDModel
 import configurations
 from zipfile import ZipFile
+from m2lib.model.gsdmmSttmModel import GSDMM
+import time
 
 toy = True
 
@@ -18,10 +22,44 @@ def heading(process):
     print('\n')
 
 def subheading(process):
-    print(f'{process}')
+    print(f'*****{process}*****')
     print('\n')
 
+def start():
+    print("""
+    MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+    MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+    MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+    MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+    MMMMMMMM             MMMMMMMMMMMMMMMMM             MMMMMMMMM
+    MMMMMMMM              MMMMMMMMMMMMMMM              MMMMMMMMM
+    MMMMMMMM                MMMMMMMMMMM                MMMMMMMMM
+    MMMMMMMM                 MMMMMMMMM                 MMMMMMMMM
+    MMMMMMMM                  MMMMMMM                  MMMMMMMMM
+    MMMMMMMMMMMM               MMMMM                MMMMMMMMMMMM
+    MMMMMMMMMMMM                MMM                 MMMMMMMMMMMM
+    MMMMMMMMMMMM                 V                  MMMMMMMMMMMM
+    MMMMMMMMMMMM                                    MMMMMMMMMMMM
+    MMMMMMMMMMMM         ^               ^          MMMMMMMMMMMM
+    MMMMMMMMMMMM         MM             MM          MMMMMMMMMMMM
+    MMMMMMMMMMMM         MMMM         MMMM          MMMMMMMMMMMM
+    MMMMMMMMMMMM         MMMMM       MMMMM          MMMMMMMMMMMM
+    MMMMMMMMMMMM         MMMMMM     MMMMMM          MMMMMMMMMMMM
+    MMMMMMMM                MMMM   MMMM                MMMMMMMMM
+    MMMMMMMM                MMMMMVMMMMM                MMMMMMMMM
+    MMMMMMMM                MMMMMMMMMMM                MMMMMMMMM
+    MMMMMMMM                MMMMMMMMMMM                MMMMMMMMM
+    MMMMMMMM                MMMMMMMMMMM                MMMMMMMMM
+    MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+    MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+    MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+    MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+    MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
+    """)
+
 def build_app(curr_dir):
+    start()
+    time.sleep(2)
     # setup directories
     try:
         os.mkdir(configurations.PICKLE_DIR)
@@ -54,15 +92,39 @@ def build_app(curr_dir):
     preprocessor = Preprocessor()
     preprocessor.pipeline(train_data)
 
+
+    """Feature Building """
     # Developing Features
     heading('Building Features')
     subheading('Building BOW')
-    # pass in the preprocessed corpus
-    bow = BOWFeature(preprocessor.corpus_processed)
-    bow.save()
-    feature_bow = bow.data
 
-    heading('Building LDA Model')
+    # pass in the preprocessed corpus
+    bow = BOWFeature()
+    bow.pipeline(preprocessor.corpus_)
+    feature_bow = bow.corpus_
+    dictionary_bow = bow.dictionary
+
+    subheading('Building TFID')
+    tfidfeature = TFIDFeature()
+    tfidfeature.pipeline(bow.corpus_, bow.dictionary)
+
+
+    """Model Building Aread"""
+
+    heading('Building Models')
+    subheading('Building LDA with BOW')
+    lda = LDAModel()
+    lda.train_model(feature_bow, dictionary_bow)
+
+    heading('Building LDA with TFID')
+    lda_tfid = LDATFIDModel()
+    lda_tfid.train_model(tfidfeature.corpus_, tfidfeature.dictionary)
+
+    # GSDMM MovieProcessGroup STTM Model
+    heading('Building GSDMM MovieGroupProcess Model')
+    gsdmm = GSDMM()
+    gsdmm.train_model(preprocessor.corpus_)
+
 
 
 if __name__ == '__main__':

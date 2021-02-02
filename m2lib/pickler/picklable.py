@@ -6,7 +6,6 @@ class PickleDef:
         self.fname = f'{obj.__class__.__name__}.pkl'
         self.obj = obj
 
-
     def __call__(self):
         return self.__dict__
 
@@ -45,25 +44,23 @@ class Picklable:
             # return obj
             self.__dict__ = obj
 
-# TODO: Use this to make pickles classes
-class Child(Picklable):
-    def __init__(self):
-        pd = PickleDef(self)
-        self.pickle_kwargs = pd()
-        super(Child, self).__init__(**self.pickle_kwargs)
 
-    def save(self):
-        super().save()
-
-    def load(self):
-        self.__dict__.update(super(Child, self).load())
-
-
-
+# TODO: Use this to make pickles classes and test
+# class Child(Picklable):
+#     def __init__(self):
+#         pd = PickleDef(self)
+#         self.pickle_kwargs = pd()
+#         super(Child, self).__init__(**self.pickle_kwargs)
+#
+#     def save(self):
+#         super().save()
+#
+#     def load(self):
+#         self.__dict__.update(super(Child, self).load())
 
 
 if __name__ == '__main__':
-    child = Child()
+    # child = Child()
     # child.save()
     # print(child.dookie)
     # child.dookie = 'farts'

@@ -2,21 +2,49 @@ import spacy
 import nltk
 from m2lib.readers.readdata import Read
 from m2lib.pickler.picklable import Picklable, PickleDef
+from m2lib.pipelines.pipeline import Pipeline
 import pandas as pd
 from gensim.parsing.preprocessing import preprocess_documents, remove_stopwords, preprocess_string, strip_tags, strip_punctuation, strip_multiple_whitespaces, strip_numeric, remove_stopwords, strip_short, stem_text
 from nltk.stem.wordnet import WordNetLemmatizer
+from gensim.models.word2vec import Text8Corpus
+from gensim.test.utils import datapath
+from gensim.models.phrases import Phrases
+from nltk import ngrams
 
+class PhraseModel(Picklable):
+    def __init__(self):
+        self.phrase_model = None
+        pd = PickleDef(self)
+        self.pickle_kwargs = pd()
+        super(PhraseModel, self).__init__(**self.pickle_kwargs)
 
-class Pipeline(object):
-    __instance = None
-    steps = {}
-    def __new__(cls):
-        if Pipeline.__instance is None:
-            Pipeline.__instance = object.__new__(cls)
-        return Pipeline.__instance
+    def train_phrase_model(self, sentences, force=False, **kwargs):
+        def train(sentences, **kwargs):
+            phrases = Phrases(sentences, min_count=1, threshold=0.1)
+            return phrases
 
-    def __call__(cls, step):
-        Pipeline.__instance.steps[f'{step.__name__}'] = step
+        print('checking if phrase model already exists')
+        if self.phrase_model:
+            print('phrase model is present')
+            if force:
+                print('but we want to force update')
+                print('training phrase model one does not exist')
+                self.phrase_model = train(sentences, **kwargs)
+                self.save()
+            else:
+                print('phrase model exists returning to you')
+                return self.phrase_model
+        else:
+            self.phrase_model = train(sentences, **kwargs)
+            self.save()
+
+    def save(self, obj=None):
+        super(PhraseModel, self).save()
+        pass
+
+    def load(self):
+        super(PhraseModel, self).load()
+
 
 class Preprocessor(Picklable, object):
     """
@@ -26,42 +54,39 @@ class Preprocessor(Picklable, object):
     :param: documents
     :return: series and array
     """
-    # __instance = None
     def __init__(self):
-
-        self.original_doc = None
         self.pipeline_steps = None
         # self.data_store_kwargs =
-        self.corpus_processed = None #self.pipeline(corpus)
+        self.corpus_ = None #self.pipeline(corpus)
+        self.phrases = None
+        # self.pipeline_steps = Pipeline().steps
         pd = PickleDef(self)
         self.pickle_kwargs = pd()
         super(Preprocessor, self).__init__(**self.pickle_kwargs)
 
-    # def __new__(cls):
-    #     if Preprocessor.__instance is None:
-    #         Preprocessor.__instance = object.__new__(cls)
-    #     return Preprocessor.__instance
-
-
     def pipeline(self, corpus, dave_pipeline=False):
-        # add first features
         print('running rudimentary preprocessing pipeline')
-        self.pipeline_steps = [self.tokenize_gensim_string, self.lemmatize]
+        manual_steps = [self.tokenize_gensim_string, self.lemmatize, self.lower, self.make_ngrams]
+        # self.train_phrase_model(corpus)
         if dave_pipeline:
             pass
         else:
             #pseudo pipeline for working on the documents
-            corpus_piped = []
+            corpus_ = []
             for doc in corpus:
                 modified_doc = doc
-                for step in self.pipeline_steps:
+                for step in manual_steps:
                     # call step with kwargs and retain modifications
                     modified_doc = step(modified_doc)
-                corpus_piped.append(modified_doc)
-            self.corpus_processed = corpus_piped
+                corpus_.append(modified_doc)
+            self.corpus_ = corpus_
             print(f'pickling preprocessor after pipeline run')
             self.save()
-            return self.corpus_processed
+            return self.corpus_
+
+    def step(function):
+        pipeline = Pipeline()
+        pipeline(function)
 
     # decorator to add steps to the pipeline on class init
     def __make_dataframe(self):
@@ -70,6 +95,12 @@ class Preprocessor(Picklable, object):
 
     def __add_feature(self, feature):
         self.feature_map[feature['name']] = feature['values']
+
+
+    def train_phrase_model(self, corpus, force=False):
+        # train the ngram -> phrase model or get pickle implements picklable
+        self.phrases = PhraseModel().train_phrase_model(corpus, force=force)
+
 
     def tokenize_gensim_string(self, doc):
         CUSTOM_FILTERS = [
@@ -84,9 +115,17 @@ class Preprocessor(Picklable, object):
         doc_ = preprocess_string(doc, CUSTOM_FILTERS)
         return doc_
 
+
     def lemmatize(self, doc):
         lemmatizer = WordNetLemmatizer()
         doc_ = [lemmatizer.lemmatize(token) for token in doc]
+        return doc_
+
+    def lower(self, doc):
+        return [t.lower() for t in doc]
+
+    def make_ngrams(self, doc, n=2):
+        doc_ = doc + ['_'.join(gram) for gram in ngrams(doc, n)]
         return doc_
 
     def __save_data_file(self):
@@ -104,10 +143,9 @@ class Preprocessor(Picklable, object):
 if __name__ == '__main__':
 
     read = Read(file='WikiLarge_Train.csv')
-    train_set = read.read_dfs['WikiLarge_Train.csv'][:20]
+    train_set = read.read_dfs['WikiLarge_Train.csv']['original_text'][:20]
     preprocessor = Preprocessor()
+    # preprocessor.train_phrase_model(train_set)
     processed = preprocessor.pipeline(train_set)
-    print(processed)
-    preprocessor.save()
     # preprocessor.pipeline(train_set['original_text'], dave_pipeline=False)
-    print(preprocessor.corpus_processed)
+    print(preprocessor.corpus_)
