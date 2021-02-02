@@ -17,7 +17,11 @@ The third and final stretch goal was to combine the two parts to have a semi-sup
 
 ## Using the Project
 
+<<<<<<< Updated upstream
 A good starting point which you have already achieved if you are seeing this message is going to the [github repo](https://github.com/milestoneTwo/milestone2App) and following the instructions in the README.md. This will help you get the project setup if you haven't already and get your development environment ready to go. 
+=======
+A good starting is going to the [github repo](https://github.com/milestoneTwo/milestone2App) and following the instructions in the README.md. This will help you get the project setup if you haven't already and get your development environment ready to go. 
+>>>>>>> Stashed changes
 
 ## Installation Steps
 #### To Setup Local Environment

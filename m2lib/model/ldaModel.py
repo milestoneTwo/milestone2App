@@ -26,11 +26,11 @@ class LDAModel(Picklable):
             'chunksize': 2000,
             'alpha' : 'auto',
             'eta': 'auto',
-            'iterations' : 400,
+            'iterations' : 50,
             'num_topics' : 10,
             'passes' : 20,
             'eval_every' : None,
-            'workers' : 3,
+            # 'workers' : 3,
         }
         pd = PickleDef(self)
         super(LDAModel, self).__init__(force_build, **pd())
@@ -44,7 +44,7 @@ class LDAModel(Picklable):
             temp = dictionary[0]
             id2word = dictionary.id2token
 
-            model = LdaMulticore(
+            model = LdaModel(
                 corpus=corpus,
                 id2word=id2word,
                 **self.lda_args
@@ -122,6 +122,26 @@ if __name__ == '__main__':
     lda_tfid_model = LDATFIDModel().train_model(tfidStore.corpus_, tfidStore.dictionary)
     lda_tfid_model_store = LDATFIDModelStore()
     lda_tfid_model_store.model = lda_tfid_model.model
+
+    tfid = TFIDFeature()
+    tfid.pipeline(bowStore.corpus_, bowStore.dictionary)
+    tfidStore = TFIDFeatureStore()
+    tfidStore.corpus_ = tfid.corpus_
+    tfidStore.dictionary = tfid.dictionary
+    tfidStore.save()
+
+    lda_model = LDAModel()
+    lda_model.train_model(bowStore.corpus_, bowStore.dictionary)
+    lda_model_store = LDAModelStore()
+    lda_model_store.model = lda_model.model
+    lda_model_store.save()
+
+    lda_tfid_model = LDATFIDModel()
+    lda_tfid_model.train_model(tfidStore.corpus_, tfidStore.dictionary)
+    lda_tfid_model_store = LDATFIDModelStore()
+    lda_tfid_model_store.model = lda_tfid_model_store.model
+    lda_tfid_model_store.save()
+
 
 
 

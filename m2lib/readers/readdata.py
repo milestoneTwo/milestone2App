@@ -4,11 +4,11 @@ from configurations import RAW_DATA_DIR, DATA_DIR
 from m2lib.pickler.picklable import Picklable, PickleDef
 
 
-
 class ReadError(Exception):
     """
     Read Error Class might be useful somewhere
     """
+
     def __init__(self, file, ext=None, message='Encountered a read error'):
         self.file = file
         self.message = message
@@ -25,10 +25,25 @@ class ReadError(Exception):
         '''
 
 
+class ReadStore(Picklable):
+    def __init__(self):
+        self.dfs = None
+        pd = PickleDef(self)
+        self.pickle_kwargs = pd()
+        super().__init__(**self.pickle_kwargs)
+
+    def save(self):
+        super().save()
+
+    def load(self):
+        super().load()
+
+
 class Read(Picklable):
     """
     parameters: file or directory or list of files
     """
+
     def __init__(self, file=None):
         # defines allowed extensions
         self.allowed_extensions = ['txt', 'csv']
@@ -52,8 +67,6 @@ class Read(Picklable):
                 else:
                     self.__readFilesDataFrames(file)
 
-
-
     def __getExtension(self, file):
         return file.split('.')[-1]
 
@@ -61,7 +74,7 @@ class Read(Picklable):
         ext = self.__getExtension(file)
         if ext in self.allowed_extensions:
             try:
-                df = pd.read_csv(os.path.join(self.data_dir,file))
+                df = pd.read_csv(os.path.join(self.data_dir, file))
                 self.read_dfs[file] = df
                 return df
             except Exception as e:
@@ -108,3 +121,6 @@ class Read(Picklable):
 if __name__ == '__main__':
     reader = Read()
     print(reader.read_dfs)
+    readStore = ReadStore()
+    readStore.dfs = reader.read_dfs
+    readStore.save()
