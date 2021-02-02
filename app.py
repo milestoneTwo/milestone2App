@@ -11,8 +11,9 @@ import configurations
 from zipfile import ZipFile
 from m2lib.model.gsdmmSttmModel import GSDMM
 import time
+import webbrowser
 
-toy = True
+toy = False
 
 def heading(process):
     print('\n')
@@ -125,10 +126,16 @@ def build_app(curr_dir):
     gsdmm = GSDMM()
     gsdmm.train_model(preprocessor.corpus_)
 
+def partb_pipeline():
 
+
+def run_server():
+    os.system('cd Milestone2Docs && mkdocs serve')
+    webbrowser.open('127.0.0.1:8000')
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+    parser.add_argument("--run", help="run build_app to read data files and generate main app objects", nargs=1)
     parser.add_argument("--run", help="run build_app to read data files and generate main app objects", nargs=1)
     args = parser.parse_args()
     if args.run[0] == 'build_app':
