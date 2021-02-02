@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="None">
+  
+  
+  <link rel="shortcut icon" href="img/favicon.ico">
+  <title>Milestone 2 Project</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Home";
+    var mkdocs_page_input_path = "index.md";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="js/jquery-2.1.1.min.js" defer></script>
+  <script src="js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href="." class="icon icon-home"> Milestone 2 Project</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href=".">Home</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#about-the-project">About the Project</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#using-the-project">Using the Project</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#installation-steps">Installation Steps</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#to-setup-local-environment">To Setup Local Environment</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#run-steps">Run Steps</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#project-design-notes">Project Design Notes</a>
+    </li>
+    </ul>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="about/">About</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="project/">Project</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="part1/">Part1</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="part2/">Part2</a>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href=".">Milestone 2 Project</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>Home</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="milestone-2-project">Milestone 2 Project</h1>
+<p>Brought to you by Dave Franks and Ermias Bizuwork <a href="about/">About</a></p>
+<p>MADS Program 2021 Go Blue!!</p>
+<h2 id="about-the-project">About the Project</h2>
+<p>The project was broken up into two parts based on the type of learning being employed. The first part <a href="part1/">Part A</a> is the supervised learning portion where the goal was to build a binary classifier to beat some derived estimators at predicting the level of reading difficulty of text. The second part <a href="part2/">Part B</a> is the unsupervised learning portion of the project. Where using the same data the goal was to use unsupervised learning techniques to glean some information from the dataset. </p>
+<p>In summary there were two main purposes to the project.</p>
+<ul>
+<li><a href="part1/">Part A</a>: To build a model that out performs in accuracy metric the Logistic Regression Classifier and Naive Bayes Classifier scoring 68% and 65% accuracy respectively.</li>
+<li><a href="part2/">Part B</a>: Create an unsupervised learning model that can characterize and explain the dataset in some way.</li>
+</ul>
+<p>The third and final stretch goal was to combine the two parts to have a semi-supervised algorithm to better increase the accuracy of the binary classifier made in Part A. The idea behind was to build a feature using an unsupervised topic model like <a href="https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation">LDA</a> to create a feature that would be aggregated with other features in Part A. Due to some technical limitations it may not be feasible to accomplish this portion of the task but a description of what could be done is described in the <a href="stretchgoals.md">Stretch Goals</a></p>
+<h2 id="using-the-project">Using the Project</h2>
+<p>A good starting point which you have already achieved if you are seeing this message is going to the <a href="https://github.com/milestoneTwo/milestone2App">github repo</a> and following the instructions in the README.md. This will help you get the project setup if you haven't already and get your development environment ready to go. </p>
+<h2 id="installation-steps">Installation Steps</h2>
+<h4 id="to-setup-local-environment">To Setup Local Environment</h4>
+<ol>
+<li>Clone Directory <br>
+<code>git clone https://github.com/milestoneTwo/milestone2App.git</code></li>
+<li>Change directory inside the directory <br>
+<code>cd [project directory]</code></li>
+<li>Make virtual environment <br>
+<code>python3 -m venv m2venv</code></li>
+<li>Jump inside the virtual environment<br>
+<code>source m2venv/bin/activate</code></li>
+<li>Install requirements <br>
+<code>pip install -r requirements.txt</code></li>
+</ol>
+<h4 id="run-steps">Run Steps</h4>
+<p>To run the development web server run the following commands</p>
+<p><code>cd Milestone2Docs &amp;&amp; mkdocs serve</code>
+Or
+<code>python app.py --run app</code></p>
+<p>Build the app with source data
+{<strong>DO NOT DO THIS</strong>}</p>
+<p><code>python app.py --run build_app</code></p>
+<h2 id="project-design-notes">Project Design Notes</h2>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="about/" class="btn btn-neutral float-right" title="About">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+      
+        <span style="margin-left: 15px"><a href="about/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '.';</script>
+    <script src="js/theme.js" defer></script>
+      <script src="search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 1.1.2
+Build Date UTC : 2021-02-02 19:40:13.045960+00:00
+-->
