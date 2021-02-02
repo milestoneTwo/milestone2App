@@ -60,6 +60,7 @@ class Picklable:
 
 
 if __name__ == '__main__':
+    pass
     # child = Child()
     # child.save()
     # print(child.dookie)

@@ -4,12 +4,13 @@ from m2lib.readers.readdata import Read
 from m2lib.pickler.picklable import Picklable, PickleDef
 from m2lib.pipelines.pipeline import Pipeline
 import pandas as pd
-from gensim.parsing.preprocessing import preprocess_documents, remove_stopwords, preprocess_string, strip_tags, strip_punctuation, strip_multiple_whitespaces, strip_numeric, remove_stopwords, strip_short, stem_text
+from gensim.parsing.preprocessing import preprocess_documents, remove_stopwords, preprocess_string, strip_tags, \
+    strip_punctuation, strip_multiple_whitespaces, strip_numeric, remove_stopwords, strip_short, stem_text
 from nltk.stem.wordnet import WordNetLemmatizer
-from gensim.models.word2vec import Text8Corpus
-from gensim.test.utils import datapath
 from gensim.models.phrases import Phrases
 from nltk import ngrams
+from tqdm import tqdm
+
 
 class PhraseModel(Picklable):
     def __init__(self):
@@ -54,10 +55,11 @@ class Preprocessor(Picklable, object):
     :param: documents
     :return: series and array
     """
+
     def __init__(self):
         self.pipeline_steps = None
         # self.data_store_kwargs =
-        self.corpus_ = None #self.pipeline(corpus)
+        self.corpus_ = None  # self.pipeline(corpus)
         self.phrases = None
         # self.pipeline_steps = Pipeline().steps
         pd = PickleDef(self)
@@ -71,9 +73,9 @@ class Preprocessor(Picklable, object):
         if dave_pipeline:
             pass
         else:
-            #pseudo pipeline for working on the documents
+            # pseudo pipeline for working on the documents
             corpus_ = []
-            for doc in corpus:
+            for doc in tqdm(corpus):
                 modified_doc = doc
                 for step in manual_steps:
                     # call step with kwargs and retain modifications
@@ -88,7 +90,6 @@ class Preprocessor(Picklable, object):
         pipeline = Pipeline()
         pipeline(function)
 
-    # decorator to add steps to the pipeline on class init
     def __make_dataframe(self):
         df = pd.DataFrame(self.feature_map)
         self.df = df
@@ -96,11 +97,9 @@ class Preprocessor(Picklable, object):
     def __add_feature(self, feature):
         self.feature_map[feature['name']] = feature['values']
 
-
     def train_phrase_model(self, corpus, force=False):
         # train the ngram -> phrase model or get pickle implements picklable
         self.phrases = PhraseModel().train_phrase_model(corpus, force=force)
-
 
     def tokenize_gensim_string(self, doc):
         CUSTOM_FILTERS = [
@@ -114,7 +113,6 @@ class Preprocessor(Picklable, object):
         ]
         doc_ = preprocess_string(doc, CUSTOM_FILTERS)
         return doc_
-
 
     def lemmatize(self, doc):
         lemmatizer = WordNetLemmatizer()
@@ -139,9 +137,7 @@ class Preprocessor(Picklable, object):
         super(Preprocessor, self).load()
 
 
-
 if __name__ == '__main__':
-
     read = Read(file='WikiLarge_Train.csv')
     train_set = read.read_dfs['WikiLarge_Train.csv']['original_text'][:20]
     preprocessor = Preprocessor()
