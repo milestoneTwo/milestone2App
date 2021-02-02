@@ -7,3 +7,4 @@ __pycache__
 pickles/*
 /testingNotebook.ipynb
 /docker_build_steps.txt
+/pickle_save
