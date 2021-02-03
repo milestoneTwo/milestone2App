@@ -15,12 +15,44 @@
   <link rel="stylesheet" href="../css/theme.css" />
   <link rel="stylesheet" href="../css/theme_extra.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/bmabey/pyLDAvis/files/ldavis.v1.0.0.css">
   
   <script>
     // Current page data
     var mkdocs_page_name = "PartB";
     var mkdocs_page_input_path = "part2.md";
     var mkdocs_page_url = null;
+    function LDAvis_load_lib(url, callback){
+      var s = document.createElement('script');
+      s.src = url;
+      s.async = true;
+      s.onreadystatechange = s.onload = callback;
+      s.onerror = function(){console.warn("failed to load library " + url);};
+      document.getElementsByTagName("head")[0].appendChild(s);
+    }
+
+    if(typeof(LDAvis) !== "undefined"){
+       // already loaded: just create the visualization
+       !function(LDAvis){
+           new LDAvis("#" + "ldavis_el399001406256686043049303319656", ldavis_el399001406256686043049303319656_data);
+       }(LDAvis);
+    }else if(typeof define === "function" && define.amd){
+       // require.js is available: use it to load d3/LDAvis
+       require.config({paths: {d3: "https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min"}});
+       require(["d3"], function(d3){
+          window.d3 = d3;
+          LDAvis_load_lib("https://cdn.rawgit.com/bmabey/pyLDAvis/files/ldavis.v1.0.0.js", function(){
+            new LDAvis("#" + "ldavis_el399001406256686043049303319656", ldavis_el399001406256686043049303319656_data);
+          });
+        });
+    }else{
+        // require.js not available: dynamically load d3 & LDAvis
+        LDAvis_load_lib("https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js", function(){
+             LDAvis_load_lib("https://cdn.rawgit.com/bmabey/pyLDAvis/files/ldavis.v1.0.0.js", function(){
+                     new LDAvis("#" + "ldavis_el399001406256686043049303319656", ldavis_el399001406256686043049303319656_data);
+                })
+             });
+    }
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -219,7 +251,8 @@
 <h2 id="unsupervised-evaluation-and-parameter-tuning">Unsupervised Evaluation and Parameter Tuning</h2>
 <p>Evaluation was done at a few levels in the basic pipeline described above for picking some of the parameters and hyperparameters. However the largest amount of effort went into evaluating perplexity and coherence. Higher coherence is better and lower perplexity is better. Given time constraints only a few runs were made at trying to select an ideal <strong>K</strong> number of topics. </p>
 <p>The algorithm performed was to iterate through 4 topic sizes <code>[5,10,15,20]</code> to then calculate perplexity and coherence and optimize the topic selection based on the outcomes. </p>
-<h2 id="discussion">Discussion</h2>
+<div id="ldavis_el399001406256686043049303319656"></div>
+              <h2 id="discussion">Discussion</h2>
 <p>There were several learnings from this project. One of the greatest is that large datasets are very difficult and time consuming to running analysis on. The gensim implementation of bag of words calculation took 10+ hours to complete on the final run. So pickling was a high priority in order to prevent from having to re run the pipeline steps for testing. </p>
 <p>The solution has several opportunities for expansion one mentioned in the section for <a href="../stretchgoals/">stretch goals</a>. Second the project overall could be integrated partA and partB in order to build a toolset that can run a full semisupervised pipeline with feature enhancements using topics. Lastly expand the pipeline, class structure, and architecture to allow for configurability of each step and automate parameter selection. </p>
 <p>This project had very little ethical concerns in my consideration given that the binary classifier is making a suggestion to modify sentences based on level of difficulty. That seems free of ethical concern. Every ML model has implications on human beings so depending on how this model is used it could have an ethical dilemma. For instance if a publishing house is using the model to analyze unpublished books </p>
