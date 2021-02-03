@@ -2,13 +2,20 @@ site_name: Milestone 2 Project
 nav:
     - Home: index.md
     - About: about.md
-    - PartA: part1.md
-    - PartB: part2.md
-    - Project: project.md
-    - PartB Notebooks:
-          - ''
+    - 'Project':
+        - Supervised Section: part1.md
+        - Unsupervised Section: part2.md
+        - Stretch Goals: stretchgoals.md
+        - 'Notebooks':
+              - Dev: Supervised_text_classification_dev.ipynb
+              - POC: Supervised_text_classification_POC.ipynb
+              - Predict: Supervised_text_classification_predict.ipynb
+
 theme: readthedocs
 plugins:
   - mknotebooks:
         enable_default_jupyter_cell_styling: false
         enable_default_pandas_dataframe_styling: false
+
+markdown_extensions:
+    - codehilite

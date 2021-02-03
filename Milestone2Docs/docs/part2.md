@@ -112,9 +112,12 @@ self.lda_args = {
  
  Evaluation was done at a few levels in the basic pipeline described above for picking some of the parameters and hyperparameters. However the largest amount of effort went into evaluating perplexity and coherence. Higher coherence is better and lower perplexity is better. Given time constraints only a few runs were made at trying to select an ideal **K** number of topics. 
  
- The algorithm performed was to iterate through 4 topic sizes `[5,10,15,20]` to then calculate perplexity and coherence and optimize the topic selection based on the outcomes. 
+ The algorithm performed was to iterate through 12 topic sizes `[1,2,3,4,5,6,7,8,9,10,15,20]` to then calculate perplexity and coherence and optimize the topic selection based on the outcomes. This was performed on a 20% portion of the whole training set to reduce time waiting for bag of words as well as each LDA model training. The results yielded the below chart of coherence and perplexity. Given the results were on a smaller dataset coherence results were untrustworthy. It was deemed appropriate that choosing anywhere between 5 and 10 topics would suffice.
  
- **K = 10**
+ ![Screenshot](img/paramtuneex.png)
+ 
+ 
+ Below is a **K = 10** pyLDAvis chart showing some of the clusters and details about words or topics in those clusters which can be explored. An interesting thing to note is that some of the topics are ambiguous and should have likely been removed in the preprocessing step. Further work into tuning the preprocessing step may build better results.
  
 <div>
 <embed
@@ -129,7 +132,7 @@ self.lda_args = {
  
  The solution has several opportunities for expansion one mentioned in the section for [stretch goals](stretchgoals.md). Second the project overall could be integrated partA and partB in order to build a toolset that can run a full semisupervised pipeline with feature enhancements using topics. Lastly expand the pipeline, class structure, and architecture to allow for configurability of each step and automate parameter selection. 
  
- This project had very little ethical concerns in my consideration given that the binary classifier is making a suggestion to modify sentences based on level of difficulty. That seems free of ethical concern. Every ML model has implications on human beings so depending on how this model is used it could have an ethical dilemma. For instance if a publishing house is using the model to analyze unpublished books 
+ This project had very little ethical concerns in my consideration given that the binary classifier is making a suggestion to modify sentences based on level of difficulty. That seems free of ethical concern. Every ML model has implications on human beings so depending on how this model is used it could have an ethical dilemma. For instance if a publishing house is using the model to analyze unpublished books and making decisions about revisions guided by the model. It would be considered unethical to use a model with bias to make these decisions. 
  
 
 

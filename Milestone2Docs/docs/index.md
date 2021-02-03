@@ -10,18 +10,18 @@ The project was broken up into two parts based on the type of learning being emp
 
 In summary there were two main purposes to the project.
 
-- [Part A](part1.md): To build a model that out performs in accuracy metric the Logistic Regression Classifier and Naive Bayes Classifier scoring 68% and 65% accuracy respectively.
-- [Part B](part2.md): Create an unsupervised learning model that can characterize and explain the dataset in some way.
+- [Part A Supervised Section](part1.md): To build a model that out performs in accuracy metric the Logistic Regression Classifier and Naive Bayes Classifier scoring 68% and 65% accuracy respectively.
+- [Part B Unsupervised Section](part2.md): Create an unsupervised learning model that can characterize and explain the dataset in some way.
 
 The third and final stretch goal was to combine the two parts to have a semi-supervised algorithm to better increase the accuracy of the binary classifier made in Part A. The idea behind was to build a feature using an unsupervised topic model like [LDA](https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation) to create a feature that would be aggregated with other features in Part A. Due to some technical limitations it may not be feasible to accomplish this portion of the task but a description of what could be done is described in the [Stretch Goals](stretchgoals.md)
 
+## Project Responsibilities
+
+Dave Franks was responsible for the Supervised Section of the project and Ermias Bizuwork was responsible for the 
+
 ## Using the Project
 
-<<<<<<< Updated upstream
-A good starting point which you have already achieved if you are seeing this message is going to the [github repo](https://github.com/milestoneTwo/milestone2App) and following the instructions in the README.md. This will help you get the project setup if you haven't already and get your development environment ready to go. 
-=======
 A good starting is going to the [github repo](https://github.com/milestoneTwo/milestone2App) and following the instructions in the README.md. This will help you get the project setup if you haven't already and get your development environment ready to go. 
->>>>>>> Stashed changes
 
 ## Installation Steps
 #### To Setup Local Environment
@@ -50,4 +50,4 @@ Build the app with source data
 
 `python app.py --run build_app`
 
-## Project Design Notes
+
