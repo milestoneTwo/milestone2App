@@ -50,7 +50,6 @@ class LDAModel(Picklable):
                 **self.lda_args
             )
             self.model = model
-            self.save()
         else:
             pass
 

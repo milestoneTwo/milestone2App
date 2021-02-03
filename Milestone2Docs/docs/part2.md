@@ -117,12 +117,11 @@ self.lda_args = {
  **K = 10**
  
 <div>
-<iframe
-  src="https://cdn.jsdelivr.net/gh/"
-  style="width:100%; height:300px;"
-></iframe>
+<embed
+  src="https://ebizuwo.github.io/content/pyldavis_k_10/index.html"
+  style="width:1500px; height:900px;"
+></embed>
 </div>
-
 
 ##Discussion
  

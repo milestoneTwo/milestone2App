@@ -39,7 +39,6 @@ class BOWFeature(Picklable):
                     modified_doc = step(modified_doc)
                 corpus_.append(modified_doc)
             self.corpus_ = corpus_
-            self.save()
             return self.corpus_
         else:
             pass

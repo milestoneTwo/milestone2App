@@ -5,5 +5,10 @@ nav:
     - PartA: part1.md
     - PartB: part2.md
     - Project: project.md
+    - PartB Notebooks:
+          - ''
 theme: readthedocs
 plugins:
+  - mknotebooks:
+        enable_default_jupyter_cell_styling: false
+        enable_default_pandas_dataframe_styling: false
