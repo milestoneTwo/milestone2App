@@ -1,0 +1,1086 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  
+  <link rel="shortcut icon" href="../img/favicon.ico">
+  <title>Dev - Milestone 2 Project</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
+
+  <link rel="stylesheet" href="../css/theme.css" />
+  <link rel="stylesheet" href="../css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link href="../css/ansi-colours.css" rel="stylesheet" />
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "Dev";
+    var mkdocs_page_input_path = "Supervised_text_classification_dev.ipynb";
+    var mkdocs_page_url = null;
+  </script>
+  
+  <script src="../js/jquery-2.1.1.min.js" defer></script>
+  <script src="../js/modernizr-2.8.3.min.js" defer></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+        <a href=".." class="icon icon-home"> Milestone 2 Project</a>
+        
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                    </li>
+                </ul>
+                <ul>
+                    <li class="toctree-l1"><a class="reference internal" href="../about/">About</a>
+                    </li>
+                </ul>
+                <p class="caption"><span class="caption-text">Project</span></p>
+                <ul class="current">
+                    <li class="toctree-l1"><a class="reference internal" href="../part1/">Supervised Section</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../part2/">Unsupervised Section</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="../stretchgoals/">Stretch Goals</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="#">Notebooks</a>
+    <ul class="current">
+                <li class="toctree-l2 current"><a class="reference internal current" href="./">Dev</a>
+    <ul class="current">
+    <li class="toctree-l3"><a class="reference internal" href="#dev-notes">Dev notes</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#data-import-and-cleaning">Data import and cleaning</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#dependencies">Dependencies</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#control-of-how-much-data-we-train-with">Control of how much data we train with</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../Supervised_text_classification_POC/">POC</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../Supervised_text_classification_predict/">Predict</a>
+                </li>
+    </ul>
+                    </li>
+                </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="..">Milestone 2 Project</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="..">Docs</a> &raquo;</li>
+    
+      
+        
+          <li>Notebooks &raquo;</li>
+        
+      
+        
+          <li>Project &raquo;</li>
+        
+      
+    
+    <li>Dev</li>
+    <li class="wy-breadcrumbs-aside">
+      
+    </li>
+  </ul>
+  
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+<script>
+(function() {
+  function addWidgetsRenderer() {
+    var mimeElement = document.querySelector('script[type="application/vnd.jupyter.widget-view+json"]');
+    var scriptElement = document.createElement('script');
+    var widgetRendererSrc = 'https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js';
+    var widgetState;
+
+    // Fallback for older version:
+    try {
+      widgetState = mimeElement && JSON.parse(mimeElement.innerHTML);
+
+      if (widgetState && (widgetState.version_major < 2 || !widgetState.version_major)) {
+        widgetRendererSrc = 'jupyter-js-widgets@*/dist/embed.js';
+      }
+    } catch(e) {}
+
+    scriptElement.src = widgetRendererSrc;
+    document.body.appendChild(scriptElement);
+  }
+
+  document.addEventListener('DOMContentLoaded', addWidgetsRenderer);
+}());
+</script>
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="supervised-learning-text-complexity-classifier-dev">Supervised Learning Text Complexity Classifier - Dev</h1>
+<h2 id="dev-notes">Dev notes</h2>
+<p>This version of the notebook uses only the training csv. The goal is to remake the algorithms tested in the POC notebook, but using the full test data. Once trained they will be output to pickle files and the PRD notebook will grab those and generate predictions on the test data.</p>
+<h2 id="data-import-and-cleaning">Data import and cleaning</h2>
+<p>Primary goals here are getting data from the training data set and creating metrics that will convey the complexity of the text to our classifiers. There are 3 additional data sources as part of the Kaggle set that we used. The average of acquisition data set contains information gathered on around 50,000 words and contains each words lemmatized root and information about when that word the average age a person learns that word and the frequency of its use. The concreteness ratings contains a smaller number of words, but gives an impression of how much a word is associated with a particular idea. Finally the dale_chall data set contains a list of words that are considered 'basic english'.</p>
+<h4 id="dependencies">Dependencies</h4>
+<p>Below are the datacleaning dependencies only. A longer list of imports for modeling is at the start of that section.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">re</span>
+<span class="kn">import</span> <span class="nn">statistics</span> <span class="k">as</span> <span class="nn">stats</span>
+<span class="kn">import</span> <span class="nn">pickle</span> <span class="k">as</span> <span class="nn">pkl</span>
+<span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">stopwords</span>  
+<span class="kn">from</span> <span class="nn">nltk.tokenize</span> <span class="kn">import</span> <span class="n">word_tokenize</span>
+<span class="kn">from</span> <span class="nn">nltk.corpus</span> <span class="kn">import</span> <span class="n">wordnet</span>
+<span class="kn">from</span> <span class="nn">nltk.stem</span> <span class="kn">import</span> <span class="n">WordNetLemmatizer</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_extraction.text</span> <span class="kn">import</span> <span class="n">TfidfVectorizer</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span><span class="p">,</span> <span class="n">GridSearchCV</span><span class="p">,</span> <span class="n">cross_val_score</span> 
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">precision_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
+<span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.mixture</span> <span class="kn">import</span> <span class="n">GaussianMixture</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">gensim.models.word2vec</span> <span class="kn">import</span> <span class="n">Word2Vec</span>
+</code></pre></div>
+
+
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;WikiLarge_Train.csv&#39;</span><span class="p">)</span>
+</code></pre></div>
+
+
+
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="control-of-how-much-data-we-train-with">Control of how much data we train with</h4>
+<p>The train and test dataframes can be adjusted here to either be the full data or a random sample of the full data set. For efficiency, the random samples were used for initial investigation of appropriate models and some parameter tuning. Final tuning and model selection was based on the training done</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">df_train</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+</code></pre></div>
+
+
+
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="train-data">Train Data</h1>
+<h3 id="word-tokenization-and-stop-word-removal">Word Tokenization and Stop Word Removal</h3>
+<p>Metrics are created out of the word count and the syllable counts within the text. However, stop words are common and often only one syllable so they were removed. The metrics will therefore be based only on the remaining words. This will through off the flesch_kincaid score from what it might have been calculated, but when trying to predict text complexity, stop words can be noisy and non-informative.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">tokenize_and_remove_stops</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="n">text_list</span> <span class="o">=</span> <span class="n">word_tokenize</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+    <span class="n">stop_word_set</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(</span><span class="n">stopwords</span><span class="o">.</span><span class="n">words</span><span class="p">(</span><span class="s1">&#39;english&#39;</span><span class="p">))</span>
+    <span class="n">clean_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">text_list</span> <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">stop_word_set</span><span class="p">]</span>
+    <span class="n">clean_list</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">clean_list</span> <span class="k">if</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="s1">&#39;^[a-z]+$&#39;</span><span class="p">,</span> <span class="n">word</span><span class="p">)]</span>
+
+    <span class="k">return</span> <span class="n">clean_list</span>
+</code></pre></div>
+
+
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;clean_text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;original_text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">tokenize_and_remove_stops</span><span class="p">)</span>
+
+<span class="n">df_train</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div>
+
+
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="scoped">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>original_text</th>
+<th>label</th>
+<th>clean_text</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>There is manuscript evidence that Austen conti...</td>
+<td>1</td>
+<td>[manuscript, evidence, austen, continued, work...</td>
+</tr>
+<tr>
+<th>1</th>
+<td>In a remarkable comparative analysis , Mandaea...</td>
+<td>1</td>
+<td>[remarkable, comparative, analysis, mandaean, ...</td>
+</tr>
+<tr>
+<th>2</th>
+<td>Before Persephone was released to Hermes , who...</td>
+<td>1</td>
+<td>[persephone, released, hermes, sent, retrieve,...</td>
+</tr>
+<tr>
+<th>3</th>
+<td>Cogeneration plants are commonly found in dist...</td>
+<td>1</td>
+<td>[cogeneration, plants, commonly, found, distri...</td>
+</tr>
+<tr>
+<th>4</th>
+<td>Geneva -LRB- , ; , ; , ; ; -RRB- is the second...</td>
+<td>1</td>
+<td>[geneva, city, switzerland, populous, city, ro...</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="syllable-count">Syllable count</h4>
+<p>While the age of acquisition data source has a syllable count attached to each word, it remains the case that not all words in the texts were in that data source. This syllable counter was retrieved from stack overflow and validated.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">syllable_count</span><span class="p">(</span><span class="n">clean_text_list</span><span class="p">):</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">clean_text_list</span><span class="p">:</span>
+        <span class="n">word</span> <span class="o">=</span> <span class="n">word</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span>
+        <span class="n">vowels</span> <span class="o">=</span> <span class="s2">&quot;aeiouy&quot;</span>
+        <span class="k">if</span> <span class="n">word</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">vowels</span><span class="p">:</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">for</span> <span class="n">index</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">word</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="n">word</span><span class="p">[</span><span class="n">index</span><span class="p">]</span> <span class="ow">in</span> <span class="n">vowels</span> <span class="ow">and</span> <span class="n">word</span><span class="p">[</span><span class="n">index</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">vowels</span><span class="p">:</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">word</span><span class="o">.</span><span class="n">endswith</span><span class="p">(</span><span class="s2">&quot;e&quot;</span><span class="p">):</span>
+            <span class="n">count</span> <span class="o">-=</span> <span class="mi">1</span>
+        <span class="k">if</span> <span class="n">count</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">count</span>
+</code></pre></div>
+
+
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;syllables&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;clean_text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">syllable_count</span><span class="p">)</span>
+<span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;word_count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;clean_text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;avg_syll_per_word&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;syllables&#39;</span><span class="p">]</span> <span class="o">/</span> <span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;word_count&#39;</span><span class="p">]</span>
+<span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;avg_syll_per_word&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;avg_syll_per_word&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">df_train</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div>
+
+
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="scoped">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>original_text</th>
+<th>label</th>
+<th>clean_text</th>
+<th>syllables</th>
+<th>word_count</th>
+<th>avg_syll_per_word</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>There is manuscript evidence that Austen conti...</td>
+<td>1</td>
+<td>[manuscript, evidence, austen, continued, work...</td>
+<td>33</td>
+<td>17</td>
+<td>1.941176</td>
+</tr>
+<tr>
+<th>1</th>
+<td>In a remarkable comparative analysis , Mandaea...</td>
+<td>1</td>
+<td>[remarkable, comparative, analysis, mandaean, ...</td>
+<td>33</td>
+<td>13</td>
+<td>2.538462</td>
+</tr>
+<tr>
+<th>2</th>
+<td>Before Persephone was released to Hermes , who...</td>
+<td>1</td>
+<td>[persephone, released, hermes, sent, retrieve,...</td>
+<td>38</td>
+<td>19</td>
+<td>2.000000</td>
+</tr>
+<tr>
+<th>3</th>
+<td>Cogeneration plants are commonly found in dist...</td>
+<td>1</td>
+<td>[cogeneration, plants, commonly, found, distri...</td>
+<td>57</td>
+<td>27</td>
+<td>2.111111</td>
+</tr>
+<tr>
+<th>4</th>
+<td>Geneva -LRB- , ; , ; , ; ; -RRB- is the second...</td>
+<td>1</td>
+<td>[geneva, city, switzerland, populous, city, ro...</td>
+<td>19</td>
+<td>8</td>
+<td>2.375000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="flesch_kincaid-ease">Flesch_kincaid ease</h4>
+<p>This is a relatively common metric for text complexity based solely on the number of words per sentence. If for some reason the score fails to calculate (happens on just a couple rows in the full data set), the mean of all successful scores is placed.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">flesch_kincaid_ease</span><span class="p">(</span><span class="n">row</span><span class="p">):</span>
+    <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="mf">206.835</span> <span class="o">-</span> <span class="mf">1.015</span><span class="o">*</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;word_count&#39;</span><span class="p">])</span> <span class="o">-</span> <span class="mf">84.6</span><span class="o">*</span><span class="p">(</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;avg_syll_per_word&#39;</span><span class="p">]),</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div>
+
+
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;fc_ease&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_train</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">flesch_kincaid_ease</span><span class="p">,</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="n">fc_mean</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;fc_ease&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;fc_ease&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;fc_ease&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">fc_mean</span><span class="p">)</span>
+
+<span class="n">df_train</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</code></pre></div>
+
+
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="scoped">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+<thead>
+<tr style="text-align: right;">
+<th></th>
+<th>original_text</th>
+<th>label</th>
+<th>clean_text</th>
+<th>syllables</th>
+<th>word_count</th>
+<th>avg_syll_per_word</th>
+<th>fc_ease</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>0</th>
+<td>There is manuscript evidence that Austen conti...</td>
+<td>1</td>
+<td>[manuscript, evidence, austen, continued, work...</td>
+<td>33</td>
+<td>17</td>
+<td>1.941176</td>
+<td>25.36</td>
+</tr>
+<tr>
+<th>1</th>
+<td>In a remarkable comparative analysis , Mandaea...</td>
+<td>1</td>
+<td>[remarkable, comparative, analysis, mandaean, ...</td>
+<td>33</td>
+<td>13</td>
+<td>2.538462</td>
+<td>-21.11</td>
+</tr>
+<tr>
+<th>2</th>
+<td>Before Persephone was released to Hermes , who...</td>
+<td>1</td>
+<td>[persephone, released, hermes, sent, retrieve,...</td>
+<td>38</td>
+<td>19</td>
+<td>2.000000</td>
+<td>18.35</td>
+</tr>
+<tr>
+<th>3</th>
+<td>Cogeneration plants are commonly found in dist...</td>
+<td>1</td>
+<td>[cogeneration, plants, commonly, found, distri...</td>
+<td>57</td>
+<td>27</td>
+<td>2.111111</td>
+<td>0.83</td>
+</tr>
+<tr>
+<th>4</th>
+<td>Geneva -LRB- , ; , ; , ; ; -RRB- is the second...</td>
+<td>1</td>
+<td>[geneva, city, switzerland, populous, city, ro...</td>
+<td>19</td>
+<td>8</td>
+<td>2.375000</td>
+<td>-2.21</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Quick check to see if there is a difference between the two labels on this metric.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">df_train</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;label&#39;</span><span class="p">)[</span><span class="s1">&#39;fc_ease&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</code></pre></div>
+
+
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_text output_subarea output_execute_result">
+<pre>
+<code>label
+0    25.707627
+1    15.813260
+Name: fc_ease, dtype: float64</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="concreteness-ratings">Concreteness Ratings</h4>
+<p>The cell below reads the concreteness data source and converts it into a dictionary with the word as the key and the measure values as entries in a nested dictionary. This allows me to calculate averages for a given text.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">df_conc</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Concreteness_ratings_Brysbaert_et_al_BRM.txt&#39;</span><span class="p">,</span> <span class="n">sep</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="s1">&#39;0&#39;</span><span class="p">)</span>
+<span class="n">basic_list</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;dale_chall.txt&#39;</span><span class="p">)[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+
+
+<span class="n">df_conc</span><span class="p">[</span><span class="s1">&#39;non_basic&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_conc</span><span class="p">[</span><span class="s1">&#39;Word&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">basic_list</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">mean_conc</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">df_conc</span><span class="p">[</span><span class="s1">&#39;Conc.M&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">4</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">df_conc</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mean_conc</span><span class="p">)</span>
+
+<span class="n">conc_keys</span> <span class="o">=</span> <span class="n">df_conc</span><span class="p">[</span><span class="s1">&#39;Word&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+<span class="n">dict_list</span> <span class="o">=</span> <span class="n">df_conc</span><span class="o">.</span><span class="n">set_index</span><span class="p">(</span><span class="s1">&#39;Word&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">orient</span> <span class="o">=</span> <span class="s1">&#39;records&#39;</span><span class="p">)</span>
+
+<span class="n">conc_dict</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">conc_keys</span><span class="p">)):</span>
+    <span class="n">conc_dict</span><span class="p">[</span><span class="n">conc_keys</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">dict_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</code></pre></div>
+
+
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+<code>          Word  Bigram  Conc.M  Conc.SD  Unknown  Total  Percent_known  \
+0  roadsweeper       0    4.85     0.37        1     27           0.96   
+
+   SUBTLEX Dom_Pos  non_basic  
+0        0       0          1  
+3.0363
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="age-of-acquisition">Age of Acquisition</h4>
+<p>Similar to the concreteness data set, the cell below gets the desired measures from the AoA data source into a dictionary for use in the metric calculations. Slightly different is that the AoA data source also has a column for alternative spellings. If the alternative spelling listed is different then the primary spelling, that spelling is added to the final dictionary as a unique entry.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">df_age</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;AoA_51715_words.csv&#39;</span><span class="p">)</span>
+<span class="n">df_age</span><span class="p">[</span><span class="s1">&#39;non_basic&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_age</span><span class="p">[</span><span class="s1">&#39;Lemma_highest_PoS&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="mi">0</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">basic_list</span> <span class="k">else</span> <span class="mi">1</span><span class="p">)</span>
+<span class="c1">#print(df_age.head())</span>
+
+<span class="n">mean_aoa</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">df_age</span><span class="p">[</span><span class="s1">&#39;AoA_Kup_lem&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">4</span><span class="p">)</span>
+<span class="n">mean_perc_known</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">df_age</span><span class="p">[</span><span class="s1">&#39;Perc_known_lem&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">med_freq</span> <span class="o">=</span> <span class="n">df_age</span><span class="p">[</span><span class="s1">&#39;Freq_pm&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">()</span>
+
+<span class="c1">#print(mean_aoa, mean_perc_known, med_freq)</span>
+
+<span class="n">age_keys</span> <span class="o">=</span> <span class="n">df_age</span><span class="p">[</span><span class="s1">&#39;Word&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+<span class="n">age_alt_keys</span> <span class="o">=</span> <span class="n">df_age</span><span class="p">[</span><span class="s1">&#39;Alternative.spelling&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_list</span><span class="p">()</span>
+
+<span class="n">df_columns_for_dict</span> <span class="o">=</span> <span class="n">df_age</span><span class="p">[[</span><span class="s1">&#39;Freq_pm&#39;</span><span class="p">,</span> <span class="s1">&#39;Dom_PoS_SUBTLEX&#39;</span><span class="p">,</span> <span class="s1">&#39;AoA_Kup_lem&#39;</span><span class="p">,</span> <span class="s1">&#39;Perc_known_lem&#39;</span><span class="p">,</span> <span class="s1">&#39;non_basic&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+<span class="n">df_columns_for_dict</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;freq&#39;</span><span class="p">,</span> <span class="s1">&#39;pos&#39;</span><span class="p">,</span> <span class="s1">&#39;aoa&#39;</span><span class="p">,</span> <span class="s1">&#39;perc_known&#39;</span><span class="p">,</span> <span class="s1">&#39;non_basic&#39;</span><span class="p">]</span>
+<span class="n">dict_list</span> <span class="o">=</span> <span class="n">df_columns_for_dict</span><span class="o">.</span><span class="n">to_dict</span><span class="p">(</span><span class="n">orient</span> <span class="o">=</span> <span class="s1">&#39;records&#39;</span><span class="p">)</span>
+
+
+<span class="n">age_dict</span> <span class="o">=</span> <span class="p">{}</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">age_keys</span><span class="p">)):</span>
+    <span class="n">age_dict</span><span class="p">[</span><span class="n">age_keys</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">dict_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">age_alt_keys</span><span class="p">)):</span>
+    <span class="k">if</span> <span class="n">age_alt_keys</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">age_dict</span><span class="p">:</span>
+        <span class="n">age_dict</span><span class="p">[</span><span class="n">age_alt_keys</span><span class="p">[</span><span class="n">i</span><span class="p">]]</span> <span class="o">=</span> <span class="n">dict_list</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+</code></pre></div>
+
+
+
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="metric-calcuations">Metric calcuations</h4>
+<p>The goal of the functions below is to get the average entry for each clean text entry in df_train. The percent_known is located in both data sources, so the larger data source (age of acquisition) is checked first. Frequency has a such heavy outliers on the high end, that median was selected instead of mean. If a word cannot be found the means of the features are substituted (median for frequency). </p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">get_mean_conc</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="n">sum_conc</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">word_count</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">text</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">sum_conc</span> <span class="o">+=</span> <span class="n">conc_dict</span><span class="p">[</span><span class="n">word</span><span class="p">][</span><span class="s1">&#39;Conc.M&#39;</span><span class="p">]</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">sum_conc</span> <span class="o">+=</span> <span class="n">mean_conc</span>
+
+    <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">sum_conc</span> <span class="o">/</span> <span class="n">word_count</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_mean_aoa</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="n">sum_aoa</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">word_count</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">text</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">sum_aoa</span> <span class="o">+=</span> <span class="n">age_dict</span><span class="p">[</span><span class="n">word</span><span class="p">][</span><span class="s1">&#39;aoa&#39;</span><span class="p">]</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">sum_aoa</span> <span class="o">+=</span> <span class="n">mean_aoa</span>
+
+    <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">sum_aoa</span> <span class="o">/</span> <span class="n">word_count</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_mean_perc</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="n">sum_perc</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="n">word_count</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">text</span><span class="p">),</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">text</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">sum_perc</span> <span class="o">+=</span> <span class="n">age_dict</span><span class="p">[</span><span class="n">word</span><span class="p">][</span><span class="s1">&#39;perc_known&#39;</span><span class="p">]</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">sum_perc</span> <span class="o">+=</span> <span class="n">conc_dict</span><span class="p">[</span><span class="n">word</span><span class="p">][</span><span class="s1">&#39;Percent_known&#39;</span><span class="p">]</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">sum_perc</span> <span class="o">+=</span> <span class="n">mean_perc_known</span>
+
+    <span class="k">return</span> <span class="nb">round</span><span class="p">(</span><span class="n">sum_perc</span> <span class="o">/</span> <span class="n">word_count</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">get_mean_freq</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="n">list_freq</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">text</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">list_freq</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">age_dict</span><span class="p">[</span><span class="n">word</span><span class="p">][</span><span class="s1">&#39;freq&#39;</span><span class="p">])</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="n">list_freq</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">med_freq</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">list_freq</span><span class="p">:</span>
+        <span class="n">list_freq</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">stats</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">list_freq</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">count_non_basic</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">text</span><span class="p">:</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">count</span> <span class="o">+=</span> <span class="n">age_dict</span><span class="p">[</span><span class="n">word</span><span class="p">][</span><span class="s1">&#39;non_basic&#39;</span><span class="p">]</span>
+        <span class="k">except</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="n">conc_dict</span><span class="p">[</span><span class="n">word</span><span class="p">][</span><span class="s1">&#39;non_basic&#39;</span><span class="p">]</span>
+            <span class="k">except</span><span class="p">:</span>
+                <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">count</span>
+</code></pre></div>
+
+
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;mean_conc&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;clean_text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">get_mean_conc</span><span class="p">)</span>
+<span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;mean_aoa&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;clean_text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">get_mean_aoa</span><span class="p">)</span>
+<span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;mean_perc_known&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;clean_text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">get_mean_perc</span><span class="p">)</span>
+<span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;mean_freq&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;clean_text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">get_mean_freq</span><span class="p">)</span>
+<span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;non_basic_words&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;clean_text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">count_non_basic</span><span class="p">)</span>
+<span class="n">df_train</span> <span class="o">=</span> <span class="n">df_train</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="c1">#df_train.replace([np.inf, -np.inf], np.nan).isnull().sum() #sanity check for nulls or infs</span>
+
+<span class="c1">#df_train.head()</span>
+</code></pre></div>
+
+
+
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="tfidf-logistic-regression-probablity">Tfidf Logistic Regression Probablity</h3>
+<p>The goal here is to train a logistic regresssion classifier on the tfidf vectors of the lemmatized words remaining in the cleaned text. Once trained, it will be used to predict the probability of the class. This probablity will be used as a feature along with other text based features calculated below.</p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">lem_combine</span><span class="p">(</span><span class="n">text_list</span><span class="p">):</span>
+    <span class="n">lem</span> <span class="o">=</span> <span class="n">WordNetLemmatizer</span><span class="p">()</span>
+    <span class="n">lem_word</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">text_list</span><span class="p">:</span>
+        <span class="n">lem_word</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">lem</span><span class="o">.</span><span class="n">lemmatize</span><span class="p">(</span><span class="n">word</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">lem_word</span><span class="p">))</span>
+</code></pre></div>
+
+
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;lem_text&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;clean_text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">lem_combine</span><span class="p">)</span>
+</code></pre></div>
+
+
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">vectorizer</span> <span class="o">=</span> <span class="n">TfidfVectorizer</span><span class="p">(</span><span class="n">stop_words</span> <span class="o">=</span> <span class="s1">&#39;english&#39;</span><span class="p">,</span> <span class="n">ngram_range</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">max_features</span> <span class="o">=</span> <span class="mi">30000</span><span class="p">)</span>
+
+<span class="n">X_vec</span> <span class="o">=</span> <span class="n">vectorizer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;lem_text&#39;</span><span class="p">])</span>
+<span class="n">y_vec</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span>
+
+<span class="n">log_vec</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">max_iter</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="n">log_vec</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_vec</span><span class="p">,</span> <span class="n">y_vec</span><span class="p">)</span>
+</code></pre></div>
+
+
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_text output_subarea output_execute_result">
+<pre>
+<code>LogisticRegression(max_iter=1000)</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;logreg_prob&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="n">num</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="k">for</span> <span class="n">num</span> <span class="ow">in</span> <span class="n">log_vec</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_vec</span><span class="p">)]</span>
+</code></pre></div>
+
+
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="c1">### Word2Vec Average Vector</span>
+</code></pre></div>
+
+
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">w2v</span> <span class="o">=</span> <span class="n">Word2Vec</span><span class="p">(</span><span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;lem_text&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">split</span><span class="p">()))</span>
+
+
+<span class="k">def</span> <span class="nf">document_vector</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+    <span class="n">doc</span> <span class="o">=</span> <span class="p">[</span><span class="n">word</span> <span class="k">for</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">text</span><span class="o">.</span><span class="n">split</span><span class="p">()</span> <span class="k">if</span> <span class="n">word</span> <span class="ow">in</span> <span class="n">w2v</span><span class="o">.</span><span class="n">wv</span><span class="o">.</span><span class="n">vocab</span><span class="p">]</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">doc</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">doc</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s1">&#39;he&#39;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">w2v</span><span class="p">[</span><span class="n">doc</span><span class="p">])</span>
+
+<span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;w2v&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_train</span><span class="o">.</span><span class="n">lem_text</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">document_vector</span><span class="p">)</span>
+</code></pre></div>
+
+
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>
+<code>C:\Users\e131353\AppData\Local\Continuum\anaconda3\lib\site-packages\ipykernel_launcher.py:8: DeprecationWarning: Call to deprecated `__getitem__` (Method will be removed in 4.0.0, use self.wv.__getitem__() instead).
+
+</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="final-x-and-y-for-model">Final X and y for model</h4>
+<p>Below is a list of the columns being used to make X and y. </p>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">X_train</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[[</span><span class="s1">&#39;word_count&#39;</span><span class="p">,</span> <span class="s1">&#39;avg_syll_per_word&#39;</span><span class="p">,</span> <span class="s1">&#39;fc_ease&#39;</span><span class="p">,</span> <span class="s1">&#39;mean_conc&#39;</span><span class="p">,</span> <span class="s1">&#39;mean_aoa&#39;</span><span class="p">,</span> <span class="s1">&#39;mean_perc_known&#39;</span><span class="p">,</span> <span class="s1">&#39;mean_freq&#39;</span><span class="p">,</span> <span class="s1">&#39;non_basic_words&#39;</span><span class="p">,</span> <span class="s1">&#39;logreg_prob&#39;</span><span class="p">,</span> <span class="s1">&#39;w2v&#39;</span><span class="p">]]</span>
+<span class="n">y_train</span> <span class="o">=</span> <span class="n">df_train</span><span class="p">[</span><span class="s1">&#39;label&#39;</span><span class="p">]</span>
+</code></pre></div>
+
+
+
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="random-forest-classifier-high-performer">Random Forest Classifier (high performer)</h4>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">scaler</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">X_train_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+
+<span class="n">knn_clf</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span> <span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">weights</span> <span class="o">=</span> <span class="s1">&#39;distance&#39;</span><span class="p">)</span>
+<span class="n">knn_clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</code></pre></div>
+
+
+
+</div>
+<div class="output_wrapper">
+<div class="output">
+<div class="output_area">
+<div class="output_text output_subarea output_execute_result">
+<pre>
+<code>KNeighborsClassifier(n_neighbors=100, weights=&#39;distance&#39;)</code>
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;log_reg.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
+    <span class="n">pkl</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">log_vec</span><span class="p">,</span> <span class="n">handle</span><span class="p">,</span> <span class="n">protocol</span> <span class="o">=</span> <span class="n">pkl</span><span class="o">.</span><span class="n">HIGHEST_PROTOCOL</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;knn.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
+    <span class="n">pkl</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">knn_clf</span><span class="p">,</span> <span class="n">handle</span><span class="p">,</span> <span class="n">protocol</span> <span class="o">=</span> <span class="n">pkl</span><span class="o">.</span><span class="n">HIGHEST_PROTOCOL</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;vectorizer.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
+    <span class="n">pkl</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">vectorizer</span><span class="p">,</span> <span class="n">handle</span><span class="p">,</span> <span class="n">protocol</span> <span class="o">=</span> <span class="n">pkl</span><span class="o">.</span><span class="n">HIGHEST_PROTOCOL</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;aoa.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
+    <span class="n">pkl</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">age_dict</span><span class="p">,</span> <span class="n">handle</span><span class="p">,</span> <span class="n">protocol</span> <span class="o">=</span> <span class="n">pkl</span><span class="o">.</span><span class="n">HIGHEST_PROTOCOL</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;concrete.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
+    <span class="n">pkl</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">conc_dict</span><span class="p">,</span> <span class="n">handle</span><span class="p">,</span> <span class="n">protocol</span> <span class="o">=</span> <span class="n">pkl</span><span class="o">.</span><span class="n">HIGHEST_PROTOCOL</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;w2v.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
+    <span class="n">pkl</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">w2v</span><span class="p">,</span> <span class="n">handle</span><span class="p">,</span> <span class="n">protocol</span> <span class="o">=</span> <span class="n">pkl</span><span class="o">.</span><span class="n">HIGHEST_PROTOCOL</span><span class="p">)</span>
+
+
+<span class="n">misc_dict</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;mean_conc&#39;</span> <span class="p">:</span> <span class="n">mean_conc</span><span class="p">,</span>
+    <span class="s1">&#39;mean_aoa&#39;</span> <span class="p">:</span> <span class="n">mean_aoa</span><span class="p">,</span>
+    <span class="s1">&#39;mean_perc_known&#39;</span> <span class="p">:</span> <span class="n">mean_perc_known</span><span class="p">,</span>
+    <span class="s1">&#39;med_freq&#39;</span> <span class="p">:</span> <span class="n">med_freq</span>
+
+<span class="p">}</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;misc.pkl&#39;</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">handle</span><span class="p">:</span>
+    <span class="n">pkl</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">misc_dict</span><span class="p">,</span> <span class="n">handle</span><span class="p">,</span> <span class="n">protocol</span> <span class="o">=</span> <span class="n">pkl</span><span class="o">.</span><span class="n">HIGHEST_PROTOCOL</span><span class="p">)</span>
+</code></pre></div>
+
+
+
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+
+<div class="codehilite"><pre><span></span><code>
+</code></pre></div>
+
+
+
+</div>
+</div>
+              
+            </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../Supervised_text_classification_POC/" class="btn btn-neutral float-right" title="POC">Next <span class="icon icon-circle-arrow-right"></span></a>
+      
+      
+        <a href="../stretchgoals/" class="btn btn-neutral" title="Stretch Goals"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+      
+        <span><a href="../stretchgoals/" style="color: #fcfcfc;">&laquo; Previous</a></span>
+      
+      
+        <span style="margin-left: 15px"><a href="../Supervised_text_classification_POC/" style="color: #fcfcfc">Next &raquo;</a></span>
+      
+    </span>
+</div>
+    <script>var base_url = '..';</script>
+    <script src="../js/theme.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
+
+</body>
+</html>

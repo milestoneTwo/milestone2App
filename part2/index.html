@@ -9,50 +9,19 @@
   
   
   <link rel="shortcut icon" href="../img/favicon.ico">
-  <title>PartB - Milestone 2 Project</title>
+  <title>Unsupervised Section - Milestone 2 Project</title>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
   <link rel="stylesheet" href="../css/theme.css" />
   <link rel="stylesheet" href="../css/theme_extra.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
-  <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/bmabey/pyLDAvis/files/ldavis.v1.0.0.css">
+  <link href="../css/ansi-colours.css" rel="stylesheet" />
   
   <script>
     // Current page data
-    var mkdocs_page_name = "PartB";
+    var mkdocs_page_name = "Unsupervised Section";
     var mkdocs_page_input_path = "part2.md";
     var mkdocs_page_url = null;
-    function LDAvis_load_lib(url, callback){
-      var s = document.createElement('script');
-      s.src = url;
-      s.async = true;
-      s.onreadystatechange = s.onload = callback;
-      s.onerror = function(){console.warn("failed to load library " + url);};
-      document.getElementsByTagName("head")[0].appendChild(s);
-    }
-
-    if(typeof(LDAvis) !== "undefined"){
-       // already loaded: just create the visualization
-       !function(LDAvis){
-           new LDAvis("#" + "ldavis_el399001406256686043049303319656", ldavis_el399001406256686043049303319656_data);
-       }(LDAvis);
-    }else if(typeof define === "function" && define.amd){
-       // require.js is available: use it to load d3/LDAvis
-       require.config({paths: {d3: "https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min"}});
-       require(["d3"], function(d3){
-          window.d3 = d3;
-          LDAvis_load_lib("https://cdn.rawgit.com/bmabey/pyLDAvis/files/ldavis.v1.0.0.js", function(){
-            new LDAvis("#" + "ldavis_el399001406256686043049303319656", ldavis_el399001406256686043049303319656_data);
-          });
-        });
-    }else{
-        // require.js not available: dynamically load d3 & LDAvis
-        LDAvis_load_lib("https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js", function(){
-             LDAvis_load_lib("https://cdn.rawgit.com/bmabey/pyLDAvis/files/ldavis.v1.0.0.js", function(){
-                     new LDAvis("#" + "ldavis_el399001406256686043049303319656", ldavis_el399001406256686043049303319656_data);
-                })
-             });
-    }
   </script>
   
   <script src="../js/jquery-2.1.1.min.js" defer></script>
@@ -71,11 +40,7 @@
     <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
         <a href=".." class="icon icon-home"> Milestone 2 Project</a>
-        <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
-  </form>
-</div>
+        
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
@@ -87,12 +52,11 @@
                     <li class="toctree-l1"><a class="reference internal" href="../about/">About</a>
                     </li>
                 </ul>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../part1/">PartA</a>
-                    </li>
-                </ul>
+                <p class="caption"><span class="caption-text">Project</span></p>
                 <ul class="current">
-                    <li class="toctree-l1 current"><a class="reference internal current" href="./">PartB</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../part1/">Supervised Section</a>
+                    </li>
+                    <li class="toctree-l1 current"><a class="reference internal current" href="./">Unsupervised Section</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#motivation">Motivation</a>
     </li>
@@ -120,9 +84,17 @@
     </li>
     </ul>
                     </li>
-                </ul>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="../project/">Project</a>
+                    <li class="toctree-l1"><a class="reference internal" href="../stretchgoals/">Stretch Goals</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Notebooks</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="../Supervised_text_classification_dev/">Dev</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../Supervised_text_classification_POC/">POC</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="../Supervised_text_classification_predict/">Predict</a>
+                </li>
+    </ul>
                     </li>
                 </ul>
       </div>
@@ -145,8 +117,12 @@
     <li><a href="..">Docs</a> &raquo;</li>
     
       
+        
+          <li>Project &raquo;</li>
+        
+      
     
-    <li>PartB</li>
+    <li>Unsupervised Section</li>
     <li class="wy-breadcrumbs-aside">
       
     </li>
@@ -174,24 +150,26 @@
 <ul>
 <li>Preprocessed tokens example</li>
 </ul>
-<pre><code class="language-python"># tokens
-['the', 'car', 'was', 'fast']
-#ngamrms (bigrams)
-['the_car', 'car_was', 'was_fast']
-# full token token + bigram
-['the', 'car', 'was', 'fast', 'the_car', 'car_was', 'was_fast']
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="c1"># tokens</span>
+<span class="p">[</span><span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;car&#39;</span><span class="p">,</span> <span class="s1">&#39;was&#39;</span><span class="p">,</span> <span class="s1">&#39;fast&#39;</span><span class="p">]</span>
+<span class="c1">#ngamrms (bigrams)</span>
+<span class="p">[</span><span class="s1">&#39;the_car&#39;</span><span class="p">,</span> <span class="s1">&#39;car_was&#39;</span><span class="p">,</span> <span class="s1">&#39;was_fast&#39;</span><span class="p">]</span>
+<span class="c1"># full token token + bigram</span>
+<span class="p">[</span><span class="s1">&#39;the&#39;</span><span class="p">,</span> <span class="s1">&#39;car&#39;</span><span class="p">,</span> <span class="s1">&#39;was&#39;</span><span class="p">,</span> <span class="s1">&#39;fast&#39;</span><span class="p">,</span> <span class="s1">&#39;the_car&#39;</span><span class="p">,</span> <span class="s1">&#39;car_was&#39;</span><span class="p">,</span> <span class="s1">&#39;was_fast&#39;</span><span class="p">]</span>
+</code></pre></div>
+
 <ul>
 <li>Featureized Tokens</li>
 </ul>
-<pre><code class="language-python"># bag of words (id, count)
-[(13, 1), (53, 3), (18, 4), (52, 3)]
+<div class="codehilite"><pre><span></span><code><span class="c1"># bag of words (id, count)</span>
+<span class="p">[(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">53</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span> <span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="p">(</span><span class="mi">52</span><span class="p">,</span> <span class="mi">3</span><span class="p">)]</span>
 
-#TFID vectors
-[[[(0, 1), (1, 1), (2, 2), (3, 1), (4, 1), (5, 1), (6, 1), (7, 1), (8, 2), (9, 1), (10, 1), (11, 1), (12, 1), (13, 1), (14, 1), (15, 1), (16, 1)]]
-['addition', 'anna', 'austen', 'continued', 'continued_work']
-# dictionary (gensim utils)
-</code></pre>
+<span class="c1">#TFID vectors</span>
+<span class="p">[[[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">13</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">1</span><span class="p">)]]</span>
+<span class="p">[</span><span class="s1">&#39;addition&#39;</span><span class="p">,</span> <span class="s1">&#39;anna&#39;</span><span class="p">,</span> <span class="s1">&#39;austen&#39;</span><span class="p">,</span> <span class="s1">&#39;continued&#39;</span><span class="p">,</span> <span class="s1">&#39;continued_work&#39;</span><span class="p">]</span>
+<span class="c1"># dictionary (gensim utils)</span>
+</code></pre></div>
+
 <ul>
 <li>Models (objects)</li>
 <li>HTML (charts)</li>
@@ -210,20 +188,20 @@
 <p>Step 1 we are reading the data into memory using pandas read from csv functionality. Its not a particular costly process and can be done quickly. Still a class was created to handle reading and accessing dataframes and original data then serialized to pickle.</p>
 <p>Step 2 is preprocessing it was done mostly with <a href="https://radimrehurek.com/gensim/parsing/preprocessing.html">gensim preprocessing</a> classes that were very useful and comprehensible. SpaCy was a bit more difficult to fit into the design without going to far into their architecture. However given that is has some very advanced techniques for processing data it will be considered for future use. Their pre built pipelines are supposed to be fast and intelligent.</p>
 <p>Tokenizing code. As you can see two popular steps for tokenizing were left out which is stripping short tokens and stemming text. This decision was made for cleanliness of output from LDA model having legible words. </p>
-<pre><code class="language-python">def tokenize_gensim_string(self, doc):
-    CUSTOM_FILTERS = [
-        strip_tags,
-        strip_punctuation,
-        strip_multiple_whitespaces,
-        strip_numeric,
-        remove_stopwords,
-        # strip_short,
-        # stem_text
-    ]
-    doc_ = preprocess_string(doc, CUSTOM_FILTERS)
-    return doc_
+<div class="codehilite"><pre><span></span><code><span class="k">def</span> <span class="nf">tokenize_gensim_string</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">doc</span><span class="p">):</span>
+    <span class="n">CUSTOM_FILTERS</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="n">strip_tags</span><span class="p">,</span>
+        <span class="n">strip_punctuation</span><span class="p">,</span>
+        <span class="n">strip_multiple_whitespaces</span><span class="p">,</span>
+        <span class="n">strip_numeric</span><span class="p">,</span>
+        <span class="n">remove_stopwords</span><span class="p">,</span>
+        <span class="c1"># strip_short,</span>
+        <span class="c1"># stem_text</span>
+    <span class="p">]</span>
+    <span class="n">doc_</span> <span class="o">=</span> <span class="n">preprocess_string</span><span class="p">(</span><span class="n">doc</span><span class="p">,</span> <span class="n">CUSTOM_FILTERS</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">doc_</span>
+</code></pre></div>
 
-</code></pre>
 <p>Step 3 Creating feature representation was also done with gensim using the bag of words model and TFID model. Each of which produce their own object representations as output that can be used for LDA model creation. See gensim <a href="https://radimrehurek.com/gensim/models/tfidfmodel.html?highlight=tfid#module-gensim.models.tfidfmodel">tfidmodel</a> and <a href="https://radimrehurek.com/gensim/corpora/dictionary.html?highlight=doc2bow#gensim.corpora.dictionary.Dictionary.doc2bow">doc2bow</a></p>
 <p>Step 4 Creating models again was another task covered by gensim. <a href="https://radimrehurek.com/gensim/models/ldamodel.html">LDA Model</a> It's one of the more widely used for LDA and has tons of support. A model was created with bag of words and tfid to compare the differences in the two. A third model was created using Gibbs Sampling Dirichlet Multinomial Mixture which is supposed to be better at topic modeling for short texts. It is also known as the Movie Group Process. Described in this <a href="https://towardsdatascience.com/short-text-topic-modeling-70e50a57c883">medium post</a>. </p>
 <p>Step 5 Analyzing the models was done with using two metrics <a href="https://radimrehurek.com/gensim/models/atmodel.html?highlight=topic%20perplexity#gensim.models.atmodel.AuthorTopicModel.log_perplexity">perplexity</a> and <a href="https://radimrehurek.com/gensim/models/coherencemodel.html">coherence</a> measures using gensim's LDA model attributes and methods.</p>
@@ -234,28 +212,37 @@
 <li>For bag of words feature there are some parameters to filter out extreme values from the dataset that are either lower or higher in instance count. </li>
 <li>LDA model has a few parameters that can be tuned most were left default.</li>
 </ul>
-<pre><code class="language-python">self.lda_args = {
-            'chunksize': 2000,
-            'alpha' : 'auto',
-            'eta': 'auto',
-            'iterations' : 50,
-            'num_topics' : 10, # K
-            'passes' : 20,
-            'eval_every' : None,
-            # 'workers' : 3,
-        }
-</code></pre>
+<div class="codehilite"><pre><span></span><code><span class="bp">self</span><span class="o">.</span><span class="n">lda_args</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;chunksize&#39;</span><span class="p">:</span> <span class="mi">2000</span><span class="p">,</span>
+            <span class="s1">&#39;alpha&#39;</span> <span class="p">:</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;eta&#39;</span><span class="p">:</span> <span class="s1">&#39;auto&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;iterations&#39;</span> <span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+            <span class="s1">&#39;num_topics&#39;</span> <span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="c1"># K</span>
+            <span class="s1">&#39;passes&#39;</span> <span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+            <span class="s1">&#39;eval_every&#39;</span> <span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+            <span class="c1"># &#39;workers&#39; : 3,</span>
+        <span class="p">}</span>
+</code></pre></div>
+
 <ul>
 <li>To include or not include ngrams? That question was difficult to answer with higher order ngrams your doc term matrix ends up being very sparse. So I split the middle and went with only 2 ngram model. Once this was selected it remained stationary for the project as running the bag of words model was costly. </li>
 </ul>
 <h2 id="unsupervised-evaluation-and-parameter-tuning">Unsupervised Evaluation and Parameter Tuning</h2>
 <p>Evaluation was done at a few levels in the basic pipeline described above for picking some of the parameters and hyperparameters. However the largest amount of effort went into evaluating perplexity and coherence. Higher coherence is better and lower perplexity is better. Given time constraints only a few runs were made at trying to select an ideal <strong>K</strong> number of topics. </p>
-<p>The algorithm performed was to iterate through 4 topic sizes <code>[5,10,15,20]</code> to then calculate perplexity and coherence and optimize the topic selection based on the outcomes. </p>
-<div id="ldavis_el399001406256686043049303319656"></div>
-              <h2 id="discussion">Discussion</h2>
+<p>The algorithm performed was to iterate through 12 topic sizes <code>[1,2,3,4,5,6,7,8,9,10,15,20]</code> to then calculate perplexity and coherence and optimize the topic selection based on the outcomes. This was performed on a 20% portion of the whole training set to reduce time waiting for bag of words as well as each LDA model training. The results yielded the below chart of coherence and perplexity. Given the results were on a smaller dataset coherence results were untrustworthy. It was deemed appropriate that choosing anywhere between 5 and 10 topics would suffice.</p>
+<p><img alt="Screenshot" src="../img/paramtuneex.png" /></p>
+<p>Below is a <strong>K = 10</strong> pyLDAvis chart showing some of the clusters and details about words or topics in those clusters which can be explored. An interesting thing to note is that some of the topics are ambiguous and should have likely been removed in the preprocessing step. Further work into tuning the preprocessing step may build better results.</p>
+<div>
+<embed
+  src="https://ebizuwo.github.io/content/pyldavis_k_10/index.html"
+  style="width:1500px; height:900px;"
+></embed>
+</div>
+
+<h2 id="discussion">Discussion</h2>
 <p>There were several learnings from this project. One of the greatest is that large datasets are very difficult and time consuming to running analysis on. The gensim implementation of bag of words calculation took 10+ hours to complete on the final run. So pickling was a high priority in order to prevent from having to re run the pipeline steps for testing. </p>
 <p>The solution has several opportunities for expansion one mentioned in the section for <a href="../stretchgoals/">stretch goals</a>. Second the project overall could be integrated partA and partB in order to build a toolset that can run a full semisupervised pipeline with feature enhancements using topics. Lastly expand the pipeline, class structure, and architecture to allow for configurability of each step and automate parameter selection. </p>
-<p>This project had very little ethical concerns in my consideration given that the binary classifier is making a suggestion to modify sentences based on level of difficulty. That seems free of ethical concern. Every ML model has implications on human beings so depending on how this model is used it could have an ethical dilemma. For instance if a publishing house is using the model to analyze unpublished books </p>
+<p>This project had very little ethical concerns in my consideration given that the binary classifier is making a suggestion to modify sentences based on level of difficulty. That seems free of ethical concern. Every ML model has implications on human beings so depending on how this model is used it could have an ethical dilemma. For instance if a publishing house is using the model to analyze unpublished books and making decisions about revisions guided by the model. It would be considered unethical to use a model with bias to make these decisions. </p>
               
             </div>
           </div>
@@ -263,10 +250,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="../project/" class="btn btn-neutral float-right" title="Project">Next <span class="icon icon-circle-arrow-right"></span></a>
+        <a href="../stretchgoals/" class="btn btn-neutral float-right" title="Stretch Goals">Next <span class="icon icon-circle-arrow-right"></span></a>
       
       
-        <a href="../part1/" class="btn btn-neutral" title="PartA"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../part1/" class="btn btn-neutral" title="Supervised Section"><span class="icon icon-circle-arrow-left"></span> Previous</a>
       
     </div>
   
@@ -295,13 +282,12 @@
         <span><a href="../part1/" style="color: #fcfcfc;">&laquo; Previous</a></span>
       
       
-        <span style="margin-left: 15px"><a href="../project/" style="color: #fcfcfc">Next &raquo;</a></span>
+        <span style="margin-left: 15px"><a href="../stretchgoals/" style="color: #fcfcfc">Next &raquo;</a></span>
       
     </span>
 </div>
     <script>var base_url = '..';</script>
     <script src="../js/theme.js" defer></script>
-      <script src="../search/main.js" defer></script>
     <script defer>
         window.onload = function () {
             SphinxRtdTheme.Navigation.enable(true);
