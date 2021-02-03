@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="css/theme.css" />
   <link rel="stylesheet" href="css/theme_extra.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
+  <link href="css/ansi-colours.css" rel="stylesheet" />
   
   <script>
     // Current page data
@@ -39,11 +40,7 @@
     <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
         <a href="." class="icon icon-home"> Milestone 2 Project</a>
-        <div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
-  </form>
-</div>
+        
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
@@ -51,6 +48,8 @@
                     <li class="toctree-l1 current"><a class="reference internal current" href=".">Home</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#about-the-project">About the Project</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#project-responsibilities">Project Responsibilities</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#using-the-project">Using the Project</a>
     </li>
@@ -62,8 +61,6 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#project-design-notes">Project Design Notes</a>
-    </li>
     </ul>
                     </li>
                 </ul>
@@ -71,16 +68,23 @@
                     <li class="toctree-l1"><a class="reference internal" href="about/">About</a>
                     </li>
                 </ul>
+                <p class="caption"><span class="caption-text">Project</span></p>
                 <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="part1/">PartA</a>
+                    <li class="toctree-l1"><a class="reference internal" href="part1/">Supervised Section</a>
                     </li>
-                </ul>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="part2/">PartB</a>
+                    <li class="toctree-l1"><a class="reference internal" href="part2/">Unsupervised Section</a>
                     </li>
-                </ul>
-                <ul>
-                    <li class="toctree-l1"><a class="reference internal" href="project/">Project</a>
+                    <li class="toctree-l1"><a class="reference internal" href="stretchgoals/">Stretch Goals</a>
+                    </li>
+                    <li class="toctree-l1"><a class="reference internal" href="#">Notebooks</a>
+    <ul>
+                <li class="toctree-l2"><a class="reference internal" href="Supervised_text_classification_dev/">Dev</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="Supervised_text_classification_POC/">POC</a>
+                </li>
+                <li class="toctree-l2"><a class="reference internal" href="Supervised_text_classification_predict/">Predict</a>
+                </li>
+    </ul>
                     </li>
                 </ul>
       </div>
@@ -122,30 +126,14 @@
 <p>The project was broken up into two parts based on the type of learning being employed. The first part <a href="part1/">Part A</a> is the supervised learning portion where the goal was to build a binary classifier to beat some derived estimators at predicting the level of reading difficulty of text. The second part <a href="part2/">Part B</a> is the unsupervised learning portion of the project. Where using the same data the goal was to use unsupervised learning techniques to glean some information from the dataset. </p>
 <p>In summary there were two main purposes to the project.</p>
 <ul>
-<li><a href="part1/">Part A</a>: To build a model that out performs in accuracy metric the Logistic Regression Classifier and Naive Bayes Classifier scoring 68% and 65% accuracy respectively.</li>
-<li><a href="part2/">Part B</a>: Create an unsupervised learning model that can characterize and explain the dataset in some way.</li>
+<li><a href="part1/">Part A Supervised Section</a>: To build a model that out performs in accuracy metric the Logistic Regression Classifier and Naive Bayes Classifier scoring 68% and 65% accuracy respectively.</li>
+<li><a href="part2/">Part B Unsupervised Section</a>: Create an unsupervised learning model that can characterize and explain the dataset in some way.</li>
 </ul>
 <p>The third and final stretch goal was to combine the two parts to have a semi-supervised algorithm to better increase the accuracy of the binary classifier made in Part A. The idea behind was to build a feature using an unsupervised topic model like <a href="https://en.wikipedia.org/wiki/Latent_Dirichlet_allocation">LDA</a> to create a feature that would be aggregated with other features in Part A. Due to some technical limitations it may not be feasible to accomplish this portion of the task but a description of what could be done is described in the <a href="stretchgoals/">Stretch Goals</a></p>
+<h2 id="project-responsibilities">Project Responsibilities</h2>
+<p>Dave Franks was responsible for the Supervised Section of the project and Ermias Bizuwork was responsible for the </p>
 <h2 id="using-the-project">Using the Project</h2>
-<p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; Updated upstream
-A good starting point which you have already achieved if you are seeing this message is going to the <a href="https://github.com/milestoneTwo/milestone2App">github repo</a> and following the instructions in the README.md. This will help you get the project setup if you haven't already and get your development environment ready to go. 
-=======
-A good starting is going to the <a href="https://github.com/milestoneTwo/milestone2App">github repo</a> and following the instructions in the README.md. This will help you get the project setup if you haven't already and get your development environment ready to go. </p>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<blockquote>
-<p>Stashed changes</p>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
-</blockquote>
+<p>A good starting is going to the <a href="https://github.com/milestoneTwo/milestone2App">github repo</a> and following the instructions in the README.md. This will help you get the project setup if you haven't already and get your development environment ready to go. </p>
 <h2 id="installation-steps">Installation Steps</h2>
 <h4 id="to-setup-local-environment">To Setup Local Environment</h4>
 <ol>
@@ -168,7 +156,6 @@ Or
 <p>Build the app with source data
 {<strong>DO NOT DO THIS</strong>}</p>
 <p><code>python app.py --run build_app</code></p>
-<h2 id="project-design-notes">Project Design Notes</h2>
               
             </div>
           </div>
@@ -210,7 +197,6 @@ Or
 </div>
     <script>var base_url = '.';</script>
     <script src="js/theme.js" defer></script>
-      <script src="search/main.js" defer></script>
     <script defer>
         window.onload = function () {
             SphinxRtdTheme.Navigation.enable(true);
@@ -222,5 +208,5 @@ Or
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2021-02-02 23:50:32.681510+00:00
+Build Date UTC : 2021-02-03 04:51:47.104700+00:00
 -->
