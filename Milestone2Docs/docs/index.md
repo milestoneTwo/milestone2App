@@ -17,7 +17,7 @@ The third and final stretch goal was to combine the two parts to have a semi-sup
 
 ## Project Responsibilities
 
-Dave Franks was responsible for the Supervised Section of the project and Ermias Bizuwork was responsible for the 
+Dave Franks was responsible for the Supervised Section of the project and Ermias Bizuwork was responsible for the Unsupervised Section of the project. Planning and execution was handled individually however routine discussion about progress and goals kept the team aligned. Our goal was to make analyze the dataset and provide clear guidance on the technologies available for NLP and how they could be used for prediction and topic generation. 
 
 ## Using the Project
 
