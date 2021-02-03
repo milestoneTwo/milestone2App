@@ -114,7 +114,16 @@ self.lda_args = {
  
  The algorithm performed was to iterate through 4 topic sizes `[5,10,15,20]` to then calculate perplexity and coherence and optimize the topic selection based on the outcomes. 
  
+ **K = 10**
  
+<div>
+<iframe
+  src="https://cdn.jsdelivr.net/gh/"
+  style="width:100%; height:300px;"
+></iframe>
+</div>
+
+
 ##Discussion
  
  There were several learnings from this project. One of the greatest is that large datasets are very difficult and time consuming to running analysis on. The gensim implementation of bag of words calculation took 10+ hours to complete on the final run. So pickling was a high priority in order to prevent from having to re run the pipeline steps for testing. 

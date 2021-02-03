@@ -2,7 +2,8 @@ site_name: Milestone 2 Project
 nav:
     - Home: index.md
     - About: about.md
+    - PartA: part1.md
+    - PartB: part2.md
     - Project: project.md
-    - Part1: part1.md
-    - Part2: part2.md
 theme: readthedocs
+plugins:

@@ -18,6 +18,9 @@ TRAIN_DATA = 'WikiLarge_Train.csv'
 TEST_DATA = 'WikiLarge_Test.csv'
 DATA_FILES = ['WikiLarge_Test.csv', 'WikiLarge_Train.csv']
 
+# HTML DIR
+HTML_DIR = os.path.join(ROOT_DIR, 'Milestone2Docs/docs/html')
+
 if __name__ == '__main__':
     print('nothing done here in this file... yet')
     pass

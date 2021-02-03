@@ -6,6 +6,10 @@ from m2lib.readers.readdata import Read
 from m2lib.featureizers.bowfeature import BOWFeature, BOWFeatureStore
 import pyLDAvis
 import pyLDAvis.gensim
+from configurations import HTML_DIR
+import time
+import os
+
 
 
 class PyLDAVizStore(Picklable):
@@ -30,16 +34,21 @@ class PyLDAViz(Picklable):
     def __init__(self, force_build=False):
         self.viz = None
         self.html = None
+        self.K = None
         pd = PickleDef(self)
         self.pickle_kwargs = pd()
         super().__init__(force_build, **self.pickle_kwargs)
 
-    def pipeline(self, model, corpus, dictionary):
+    def pipeline(self, model, corpus, dictionary, K):
         viz = pyLDAvis.gensim.prepare(model, corpus, dictionary)
-        html = viz.save_html()
+        html = pyLDAvis.prepared_data_to_html(viz, template_type="general")
         self.viz = viz
         self.html = html
+        self.K = K
+        self.save_html()
 
+    def save_html(self):
+        pyLDAvis.save_html(self.viz, os.path.join(HTML_DIR, f'pyldavis_{self.K}_{time.time()}.html'))
 
     def save(self):
         super().save()
@@ -49,16 +58,20 @@ class PyLDAViz(Picklable):
 
 
 if __name__ == '__main__':
-    ldaStore = LDAModelStore()
-    bowStore = BOWFeatureStore()
-    pyviz = PyLDAViz()
     pyvizStore = PyLDAVizStore()
-    pyviz.pipeline(ldaStore.model, bowStore.corpus_, bowStore.dictionary)
+    print(pyvizStore.html[0])
 
-    pyvizStore.viz.append(pyviz.viz)
-    pyvizStore.html.append(pyviz.html)
-    pyvizStore.K.append(10)
-    pyvizStore.save()
+    # ldaStore = LDAModelStore()
+    # bowStore = BOWFeatureStore()
+    # pyviz = PyLDAViz()
+    # pyvizStore = PyLDAVizStore()
+    # pyviz.pipeline(ldaStore.model, bowStore.corpus_, bowStore.dictionary, 10)
+
+    # pyvizStore.viz.append(pyviz.viz)
+    # pyvizStore.html.append(pyviz.html)
+    # pyvizStore.K.append(10)
+    # pyvizStore.save()
+
 
 
 
